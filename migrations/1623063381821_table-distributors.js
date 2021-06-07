@@ -4,23 +4,19 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
   pgm.sql(`
-  CREATE TABLE users (
+  CREATE TABLE distributors (
     id SERIAL PRIMARY KEY,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    username VARCHAR(30) NOT NULL,
-    email VARCHAR(80) UNIQUE NOT NULL,
-    password VARCHAR(500) NOT NULL
+    name VARCHAR(200) UNIQUE NOT NULL
   );
 
-  CREATE UNIQUE INDEX ON users (email);
-
-  CREATE UNIQUE INDEX ON users (id);
+  CREATE UNIQUE INDEX ON distributors (id);
   `);
 };
 
 exports.down = (pgm) => {
   pgm.sql(`
-  DROP TABLE users;
+  DROP TABLE distributors;
   `);
 };

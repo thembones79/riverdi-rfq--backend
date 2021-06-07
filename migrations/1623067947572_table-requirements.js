@@ -4,23 +4,22 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
   pgm.sql(`
-  CREATE TABLE users (
+  CREATE TABLE requirements (
     id SERIAL PRIMARY KEY,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    username VARCHAR(30) NOT NULL,
-    email VARCHAR(80) UNIQUE NOT NULL,
-    password VARCHAR(500) NOT NULL
+    rfq_id INTEGER NOT NULL REFERENCES rfqs(id) ON DELETE CASCADE,
+    c_nc_cwr VARCHAR(4),
+    requirement TEXT,
+    note TEXT
   );
 
-  CREATE UNIQUE INDEX ON users (email);
-
-  CREATE UNIQUE INDEX ON users (id);
+  CREATE UNIQUE INDEX ON requirements (id);
   `);
 };
 
 exports.down = (pgm) => {
   pgm.sql(`
-  DROP TABLE users;
+  DROP TABLE requirements;
   `);
 };
