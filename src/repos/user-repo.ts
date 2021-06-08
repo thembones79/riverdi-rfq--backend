@@ -14,7 +14,7 @@ class UserRepo {
   static async findById(id: string) {
     try {
       const result = await pool.query(
-        `SELECT id, username, email FROM users WHERE id = $1;`,
+        `SELECT id, username, email, shortname FROM users WHERE id = $1;`,
         [id]
       );
       return result?.rows[0];
@@ -26,7 +26,7 @@ class UserRepo {
   static async findByEmail(email: string) {
     try {
       const result = await pool.query(
-        `SELECT id, username, email, password FROM users WHERE email = $1;`,
+        `SELECT id, username, email, password, shortname FROM users WHERE email = $1;`,
         [email]
       );
       return result?.rows[0];
@@ -39,15 +39,19 @@ class UserRepo {
     username,
     password,
     email,
+    shortname,
+    role_id,
   }: {
     username: string;
     password: string;
     email: string;
+    shortname: string;
+    role_id: string;
   }) {
     try {
       const result = await pool.query(
-        `INSERT INTO users (username, password, email) VALUES ($1, $2, $3) RETURNING id, username, email;`,
-        [username, password, email]
+        `INSERT INTO users (username, password, email, shortname, role_id) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, email, shortname;`,
+        [username, password, email, shortname, role_id]
       );
       return result?.rows[0];
     } catch (error) {

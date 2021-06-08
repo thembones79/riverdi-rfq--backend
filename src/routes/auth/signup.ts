@@ -26,23 +26,40 @@ router.post(
       .trim()
       .isLength({ min: 2, max: 30 })
       .withMessage("Username must be between 2 and 40 characters"),
+    body("shortname")
+      .trim()
+      .toUpperCase()
+      .isLength({ min: 2, max: 8 })
+      .withMessage("Shortname must be between 2 and 8 characters"),
+    body("role_id")
+      .trim()
+      .notEmpty()
+      .isNumeric()
+      .withMessage("You must supply a RoleId"),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password, username } = req.body;
+    const { email, password, username, shortname, role_id } = req.body;
     const existingUser = await UserRepo.findByEmail(email);
     if (existingUser) {
       throw new BadRequestError("Email in use", "email");
     }
 
     const hashed = await Password.toHash(password);
-    const user = await UserRepo.insert({ email, password: hashed, username });
+    const user = await UserRepo.insert({
+      email,
+      password: hashed,
+      username,
+      shortname,
+      role_id,
+    });
 
     const userJwt = jwt.sign(
       {
         id: user.id,
         email: user.email,
         username: user.username,
+        roleId: user.role_id,
       },
       keys.JWT_SECRET
     );
