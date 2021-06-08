@@ -9,6 +9,8 @@ it("returns a 201 on successful signup", async () => {
       email: "test@test.com",
       password: "passwordpassword",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(201);
 });
@@ -21,6 +23,8 @@ it("creates a user", async () => {
       email: "test@test.com",
       password: "passwordpassword",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(201);
 
@@ -35,6 +39,8 @@ it("returns a 400 with invalid email", async () => {
       email: "test@tes@@t.com",
       password: "password",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(400);
 });
@@ -46,6 +52,8 @@ it("returns a 400 with invalid password", async () => {
       email: "test@test.com",
       username: "testtest",
       password: "pa",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(400);
 });
@@ -61,6 +69,8 @@ it("disallows duplicate emails", async () => {
       email: "test@test.com",
       password: "password",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(201);
 
@@ -70,6 +80,8 @@ it("disallows duplicate emails", async () => {
       email: "test@test.com",
       password: "password",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(400);
 });
@@ -81,6 +93,8 @@ it("sets a cookie after successful signup", async () => {
       email: "test@test.com",
       password: "password",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(201);
 

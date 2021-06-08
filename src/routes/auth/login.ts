@@ -46,6 +46,7 @@ router.post(
         id: existingUser.id,
         email: existingUser.email,
         username: existingUser.username,
+        roleId: existingUser.role_id,
       },
       keys.JWT_SECRET
     );

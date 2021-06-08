@@ -6,7 +6,7 @@ import { pool } from "../pool";
 const DEFAULT_OPTS = {
   host: "localhost",
   port: 5432,
-  database: "xstarter-test",
+  database: "riverdirfq-test",
   user: "michal",
   password: "",
 };
@@ -17,15 +17,15 @@ export class Context {
     const roleName = "b" + randomBytes(4).toString("hex");
 
     // Connect to PG as usual
-    const pool1 = await pool.connect(DEFAULT_OPTS);
+    await pool.connect(DEFAULT_OPTS);
 
     // Create a new role
-    const newRole = await pool.query(
+    await pool.query(
       format("CREATE ROLE %I WITH LOGIN PASSWORD %L;", roleName, roleName)
     );
 
     // Create a schema wuth the same name
-    const newSchema = await pool.query(
+    await pool.query(
       format("CREATE SCHEMA %I AUTHORIZATION %I;", roleName, roleName)
     );
 
@@ -41,7 +41,7 @@ export class Context {
     // Run our migrations in the new schema
     // @ts-ignore
 
-    const migs = await migrate({
+    await migrate({
       schema: roleName,
       direction: "up",
       log: () => {},
@@ -51,7 +51,15 @@ export class Context {
     });
 
     // Connect to PG as the newly created role
-    const pool2 = await pool.connect(ROLE_OPTS);
+    await pool.connect(ROLE_OPTS);
+
+    // insert necessary initial data
+    await pool.query(
+      `INSERT INTO roles(role) VALUES ('admin'),('pm'),('kam');`
+    );
+    await pool.query(`INSERT INTO customers(id, name) VALUES (1, 'ABCD');`);
+    await pool.query(`INSERT INTO distributors(name) VALUES ('EFGH');`);
+
     return new Context(roleName);
   }
 
@@ -60,11 +68,16 @@ export class Context {
   }
 
   async reset() {
-    const rrr = await pool.query(`DELETE FROM users RETURNING *;`);
-    return rrr;
+    await pool.query(`DELETE FROM users RETURNING *;`);
   }
 
   async close() {
+    // Delete initial data
+    await pool.query(`DELETE FROM users;`);
+    await pool.query(`DELETE FROM roles;`);
+    await pool.query(`DELETE FROM customers;`);
+    await pool.query(`DELETE FROM distributors;`);
+
     // Disconnect from PG
     await pool.close();
 

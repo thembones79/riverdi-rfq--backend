@@ -31,6 +31,8 @@ global.login = async () => {
       email: "test@test.com",
       password: "password",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(201);
 

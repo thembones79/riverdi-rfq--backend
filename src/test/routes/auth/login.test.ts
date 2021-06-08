@@ -18,6 +18,8 @@ it("fails when an incorrect password is supplied", async () => {
       email: "test@test.com",
       password: "password",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(201);
 
@@ -37,6 +39,8 @@ it("responds with a cookie when given valid credentials", async () => {
       email: "test@test.com",
       password: "password",
       username: "test",
+      shortname: "QWERTY",
+      role_id: 1,
     })
     .expect(201);
 
