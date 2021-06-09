@@ -63,15 +63,19 @@ class UserRepo {
     id,
     username,
     email,
+    shortname,
+    role_id,
   }: {
     id: string;
     username: string;
     email: string;
+    shortname: string;
+    role_id: string;
   }) {
     try {
       const result = await pool.query(
-        `UPDATE users SET username = $1, email = $2 WHERE id = $3 RETURNING id, username, email;`,
-        [username, email, id]
+        `UPDATE users SET username = $2, email = $3, shortname = $4, role_id = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING id, username, email, shortname;`,
+        [id, username, email, shortname, role_id]
       );
       return result?.rows[0];
     } catch (error) {
@@ -88,7 +92,7 @@ class UserRepo {
   }) {
     try {
       const result = await pool.query(
-        `UPDATE users SET password = $1 WHERE id = $2 RETURNING id, username, email;`,
+        `UPDATE users SET password = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING id, username, email;`,
         [password, id]
       );
       return result?.rows[0];
@@ -101,6 +105,18 @@ class UserRepo {
     try {
       const result = await pool.query(
         `DELETE FROM users WHERE id = $1 RETURNING id, username, email;`,
+        [id]
+      );
+      return result?.rows[0];
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
+  }
+
+  static async markDeleted(id: string) {
+    try {
+      const result = await pool.query(
+        `UPDATE users SET deleted = TRUE WHERE id = $1 RETURNING id, username, email;`,
         [id]
       );
       return result?.rows[0];
