@@ -68,11 +68,13 @@ export class Context {
   }
 
   async reset() {
-    await pool.query(`DELETE FROM users RETURNING *;`);
+    await pool.query(`DELETE FROM rfqs;`);
+    await pool.query(`DELETE FROM users;`);
   }
 
   async close() {
     // Delete initial data
+    await pool.query(`DELETE FROM rfqs;`);
     await pool.query(`DELETE FROM users;`);
     await pool.query(`DELETE FROM roles;`);
     await pool.query(`DELETE FROM customers;`);

@@ -1,20 +1,16 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 
-import { validateRequest } from "../../middlewares";
-import { BadRequestError } from "../../errors";
+import { validateRequest, requireAuth } from "../../middlewares";
 import { RfqRepo } from "../../repos/rfq-repo";
+import { generateRfqCode } from "../../services/rfqNoGenerator";
 
 const router = express.Router();
 
 router.post(
   "/api/v1/rfqs",
+  requireAuth,
   [
-    body("rfq_code")
-      .trim()
-      .toUpperCase()
-      .isLength({ min: 11, max: 21 })
-      .withMessage("RFQ Code must be between 11 and 21 characters"),
     body("eau")
       .trim()
       .notEmpty()
@@ -43,11 +39,13 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { rfq_code, eau, customer_id, distributor_id, pm_id, kam_id } =
-      req.body;
-    const existingRfq = await RfqRepo.findByRfqCode(rfq_code);
-    if (existingRfq) {
-      throw new BadRequestError("RFQ Code in use", "rfq_code");
+    const { eau, customer_id, distributor_id, pm_id, kam_id } = req.body;
+
+    let rfq_code = generateRfqCode(customer_id);
+    let existingRfq = await RfqRepo.findByRfqCode(rfq_code);
+    while (existingRfq) {
+      rfq_code = generateRfqCode(customer_id);
+      existingRfq = await RfqRepo.findByRfqCode(rfq_code);
     }
 
     const rfq = await RfqRepo.insert({
