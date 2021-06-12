@@ -6,6 +6,7 @@ class RfqRepo {
     try {
       const result = await pool.query(`
       SELECT
+      id,
       rfq_code,
       eau,
       customers.name AS customer,

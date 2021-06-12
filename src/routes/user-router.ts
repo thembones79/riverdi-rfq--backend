@@ -4,7 +4,6 @@ import {
   signupRouter,
   loginRouter,
   logoutRouter,
-  helloRouter,
   currentUserRouter,
   allUsersRouter,
   showUserRouter,
@@ -16,7 +15,6 @@ app.use(currentUserRouter);
 app.use(loginRouter);
 app.use(logoutRouter);
 app.use(signupRouter);
-app.use(helloRouter);
 app.use(allUsersRouter);
 app.use(showUserRouter);
 
