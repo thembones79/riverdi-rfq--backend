@@ -30,7 +30,22 @@ class RfqRepo {
   static async findById(id: string) {
     try {
       const result = await pool.query(
-        `SELECT id, rfq_code FROM rfqs WHERE id = $1;`,
+        `
+        SELECT
+        id,
+        rfq_code,
+        eau,
+        customers.name AS customer,
+        distributors.name AS distributor,
+        pm.shortname AS pm,
+        kam.shortname AS kam
+        FROM rfqs
+        WHERE id = $1
+        JOIN customers ON customers.id = rfqs.customer_id
+        JOIN distributors ON distributors.id = rfqs.distributor_id
+        JOIN users AS pm ON pm.id = rfqs.pm_id
+        JOIN users AS kam ON kam.id = rfqs.kam_id;
+        `,
         [id]
       );
       return result?.rows[0];
