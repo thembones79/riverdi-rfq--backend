@@ -24,7 +24,7 @@ router.post(
       .trim()
       .notEmpty()
       .escape()
-      .withMessage("You must supply a PmId"),
+      .withMessage("You must supply a requirement"),
     body("note").trim().escape(),
   ],
   validateRequest,

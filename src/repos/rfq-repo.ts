@@ -6,19 +6,19 @@ class RfqRepo {
     try {
       const result = await pool.query(`
       SELECT
-      id,
+      r.id,
       rfq_code,
       eau,
       customers.name AS customer,
       distributors.name AS distributor,
       pm.shortname AS pm,
       kam.shortname AS kam,
-      to_char(rfqs.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
-      FROM rfqs
-      JOIN customers ON customers.id = rfqs.customer_id
-      JOIN distributors ON distributors.id = rfqs.distributor_id
-      JOIN users AS pm ON pm.id = rfqs.pm_id
-      JOIN users AS kam ON kam.id = rfqs.kam_id
+      to_char(r.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+      FROM rfqs AS r
+      JOIN customers ON customers.id = r.customer_id
+      JOIN distributors ON distributors.id = r.distributor_id
+      JOIN users AS pm ON pm.id = r.pm_id
+      JOIN users AS kam ON kam.id = r.kam_id
       ORDER BY updated DESC;
       `);
       return result?.rows;
@@ -32,19 +32,20 @@ class RfqRepo {
       const result = await pool.query(
         `
         SELECT
-        id,
-        rfq_code,
-        eau,
-        customers.name AS customer,
-        distributors.name AS distributor,
-        pm.shortname AS pm,
-        kam.shortname AS kam
-        FROM rfqs
-        WHERE id = $1
-        JOIN customers ON customers.id = rfqs.customer_id
-        JOIN distributors ON distributors.id = rfqs.distributor_id
-        JOIN users AS pm ON pm.id = rfqs.pm_id
-        JOIN users AS kam ON kam.id = rfqs.kam_id;
+          r.id,
+          rfq_code,
+          eau,
+          customers.name AS customer,
+          distributors.name AS distributor,
+          pm.shortname AS pm,
+          kam.shortname AS kam,
+          to_char(r.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+          FROM rfqs AS r
+          JOIN customers ON customers.id = r.customer_id
+          JOIN distributors ON distributors.id = r.distributor_id
+          JOIN users AS pm ON pm.id = r.pm_id
+          JOIN users AS kam ON kam.id = r.kam_id
+        WHERE r.id = $1
         `,
         [id]
       );
