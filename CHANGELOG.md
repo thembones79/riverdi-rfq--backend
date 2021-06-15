@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2021-06-15
+
+### 🔥 Added
+
+- logic for showing a RFQ on GET `/api/v1/rfq/:id` route
+- logic for showing a RFQ's requirements on GET `/api/v1/rfq/:id/requirements` route
+- tests for showing a RFQ on GET `/api/v1/rfq/:id` route
+- tests for showing a RFQ's requirements on GET `/api/v1/rfq/:id/requirements` route
+
 ## [0.4.0] - 2021-06-12
 
 ### 🔥 Added

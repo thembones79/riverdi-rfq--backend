@@ -1,10 +1,10 @@
 import request from "supertest";
 import { app } from "../../../app";
 
-it("responds with rfqs list", async () => {
+it("responds with rfq details", async () => {
   const cookie = await global.login();
 
-  await request(app)
+  const newRfq = await request(app)
     .post("/api/v1/rfqs")
     .set("Cookie", cookie)
     .send({
@@ -17,14 +17,22 @@ it("responds with rfqs list", async () => {
     .expect(201);
 
   const response = await request(app)
-    .get("/api/v1/rfqs")
+    .get(`/api/v1/rfqs/${newRfq.body.id}`)
     .set("Cookie", cookie)
     .send()
     .expect(200);
+});
 
-  expect(response.body.length).toBeGreaterThan(0);
+it("responds with 404 if rfq not found", async () => {
+  const cookie = await global.login();
+
+  const response = await request(app)
+    .get(`/api/v1/rfqs/1`)
+    .set("Cookie", cookie)
+    .send()
+    .expect(404);
 });
 
 it("responds 401 if not authenticated", async () => {
-  const response = await request(app).get("/api/v1/rfqs").send().expect(401);
+  const response = await request(app).get("/api/v1/rfqs/4").send().expect(401);
 });

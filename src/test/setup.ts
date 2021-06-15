@@ -5,7 +5,7 @@ import { Context } from "./context";
 declare global {
   namespace NodeJS {
     interface Global {
-      login(): Promise<string[]>;
+      login(role_id?: number): Promise<string[]>;
     }
   }
 }
@@ -24,15 +24,15 @@ afterAll(async () => {
   await context?.close();
 });
 
-global.login = async () => {
+global.login = async (role_id = 1) => {
   const authResponse = await request(app)
     .post("/api/v1/users/signup")
     .send({
-      email: "test@test.com",
-      password: "password",
-      username: "test",
-      shortname: "QWERTY",
-      role_id: 1,
+      email: `test${role_id}@test.com`,
+      password: `password`,
+      username: `test${role_id}`,
+      shortname: `QWERTY${role_id}`,
+      role_id,
     })
     .expect(201);
 
