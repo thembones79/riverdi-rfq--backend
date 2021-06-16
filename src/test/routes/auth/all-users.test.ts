@@ -2,7 +2,7 @@ import request from "supertest";
 import { app } from "../../../app";
 
 it("responds with users list", async () => {
-  const cookie = await global.login();
+  const cookie = await global.login(2);
 
   const response = await request(app)
     .get("/api/v1/users")

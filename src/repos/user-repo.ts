@@ -4,7 +4,14 @@ import { pool } from "../pool";
 class UserRepo {
   static async find() {
     try {
-      const result = await pool.query(`SELECT id, username, email FROM users;`);
+      const result = await pool.query(
+        `
+        SELECT id, username, email, shortname, role_id
+        FROM users
+        WHERE role_id <> 1
+        ORDER BY username;
+        `
+      );
       return result?.rows;
     } catch (error) {
       throw new BadRequestError(error.message);
