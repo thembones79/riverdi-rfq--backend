@@ -5,9 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.6.0] - 2021-06-16
+## [0.7.0] - 2021-06-17
 
 ### 🔥 Added
+
+- customerRepo db handler (orm style)
+- distributorRepo db handler (orm style)
+- logic for listing customers on GET `/api/v1/customers` route
+- logic for listing distributors on GET `/api/v1/distributors` route
+
+## [0.6.0] - 2021-06-16
+
+### 💪 Updated
 
 - changed userRepo and route to return all necessary user fields, sort records by username and filter out admins
 

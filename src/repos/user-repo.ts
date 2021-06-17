@@ -6,7 +6,7 @@ class UserRepo {
     try {
       const result = await pool.query(
         `
-        SELECT id, username, email, shortname, role_id
+        SELECT id, username, username AS name, email, shortname, role_id
         FROM users
         WHERE role_id <> 1
         ORDER BY username;
