@@ -29,6 +29,18 @@ class DistributorRepo {
     }
   }
 
+  static async findByName(name: string) {
+    try {
+      const result = await pool.query(
+        `SELECT id, name FROM distributors WHERE name = $1;`,
+        [name]
+      );
+      return result?.rows[0];
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
+  }
+
   static async insert({ name }: { name: string }) {
     try {
       const result = await pool.query(
