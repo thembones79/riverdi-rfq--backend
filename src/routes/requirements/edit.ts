@@ -2,12 +2,14 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 
 import { validateRequest, requireAuth } from "../../middlewares";
+import { BadRequestError } from "../../errors";
 import { RequirementRepo } from "../../repos/requirement-repo";
+import { RfqRepo } from "../../repos/rfq-repo";
 
 const router = express.Router();
 
-router.post(
-  "/api/v1/requirements",
+router.put(
+  "/api/v1/requirements/:id",
   requireAuth,
   [
     body("rfq_id")
@@ -30,16 +32,28 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { rfq_id, c_nc_cwr, requirement, note } = req.body;
+    const { id } = req.params;
 
-    const newRequirement = await RequirementRepo.insert({
+    let existingRequirement = await RequirementRepo.findById(id);
+    if (!existingRequirement) {
+      throw new BadRequestError("Requirement does not exists");
+    }
+
+    let existingRfq = await RfqRepo.findById(rfq_id);
+    if (!existingRfq) {
+      throw new BadRequestError("RFQ does not exists");
+    }
+
+    const updatedRequirement = await RequirementRepo.updateData({
+      id,
       rfq_id,
       c_nc_cwr,
       requirement,
       note,
     });
 
-    res.status(201).send(newRequirement);
+    res.status(201).send(updatedRequirement);
   }
 );
 
-export { router as newRequirementRouter };
+export { router as updateRequirementRouter };

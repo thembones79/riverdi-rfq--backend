@@ -95,7 +95,6 @@ class RfqRepo {
 
   static async updateData({
     id,
-    rfq_code,
     eau,
     customer_id,
     distributor_id,
@@ -103,7 +102,6 @@ class RfqRepo {
     kam_id,
   }: {
     id: string;
-    rfq_code: string;
     eau: string;
     customer_id: string;
     distributor_id: string;
@@ -112,8 +110,8 @@ class RfqRepo {
   }) {
     try {
       const result = await pool.query(
-        `UPDATE rfqs SET rfq_code = $2, eau = $3, customer_id = $4, distributor_id = $5, pm_id = $6, kam_id = $7, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING id, rfq_code;`,
-        [id, rfq_code, eau, customer_id, distributor_id, pm_id, kam_id]
+        `UPDATE rfqs SET  eau = $2, customer_id = $3, distributor_id = $4, pm_id = $5, kam_id = $6, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING id, rfq_code;`,
+        [id, eau, customer_id, distributor_id, pm_id, kam_id]
       );
       return result?.rows[0];
     } catch (error) {
