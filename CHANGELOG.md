@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2021-06-19
+
+### 🔥 Added
+
+- logic for creating new distributor on POST `/api/v1/distributors` route
+- logic for listing all distributors on GET `/api/v1/distributors` route
+- logic for updating requirement on PUT `/api/v1/requirements/:id` route
+- logic for updating rfq on PUT `/api/v1/rfqs/:id` route
+- logic for updating distributor on PUT `/api/v1/distributors/:id` route
+- logic for deleting requirement on DELETE `/api/v1/requirements/:id` route
+- logic for deleting rfq on DELETE `/api/v1/rfqs/:id` route
+- logic for deleting distributor on DELETE `/api/v1/distributors/:id` route
+
 ## [0.7.0] - 2021-06-18
 
 ### 🔥 Added

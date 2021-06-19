@@ -2,6 +2,27 @@ import { BadRequestError } from "../errors";
 import { pool } from "../pool";
 
 class RequirementRepo {
+  static async find() {
+    try {
+      const result = await pool.query(
+        `
+        SELECT
+        id,
+        rfq_id,
+        c_nc_cwr,
+        requirement,
+        note,
+        to_char(requirements.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+        FROM requirements
+        ORDER BY updated ASC;
+        `
+      );
+      return result?.rows;
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
+  }
+
   static async findByRfqId(rfq_id: string) {
     try {
       const result = await pool.query(
@@ -67,6 +88,12 @@ class RequirementRepo {
     }
   }
 
+  // id,
+  // rfq_id,
+  // c_nc_cwr,
+  // requirement,
+  // note,
+
   static async updateData({
     id,
     rfq_id,
@@ -82,7 +109,7 @@ class RequirementRepo {
   }) {
     try {
       const result = await pool.query(
-        `UPDATE requirements SET rfq_id = $2, c_nc_cwr = $3, requirement = $4, note = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING id, rfq_code;`,
+        `UPDATE requirements SET rfq_id = $2, c_nc_cwr = $3, requirement = $4, note = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *;`,
         [id, rfq_id, c_nc_cwr, requirement, note]
       );
       return result?.rows[0];

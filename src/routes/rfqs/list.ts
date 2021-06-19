@@ -5,8 +5,8 @@ import { RfqRepo } from "../../repos/rfq-repo";
 const router = express.Router();
 
 router.get("/api/v1/rfqs", requireAuth, async (req, res) => {
-  const users = await RfqRepo.find();
-  res.send(users);
+  const rfqs = await RfqRepo.find();
+  res.send(rfqs);
 });
 
 export { router as rfqListRouter };

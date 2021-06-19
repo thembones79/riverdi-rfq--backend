@@ -15,11 +15,13 @@ router.post(
   [
     body("email")
       .trim()
+      .escape()
       .toLowerCase()
       .isEmail()
       .withMessage("Email must be valid"),
     body("password")
       .trim()
+      .escape()
       .notEmpty()
       .withMessage("You must supply a password"),
   ],

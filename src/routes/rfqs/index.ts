@@ -1,3 +1,5 @@
 export * from "./new";
 export * from "./list";
 export * from "./show";
+export * from "./edit";
+export * from "./delete";
