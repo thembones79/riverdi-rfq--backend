@@ -5,6 +5,8 @@ import { keys } from "../config/keys";
 interface UserPayload {
   id: string;
   email: string;
+  username: string;
+  roleId: number;
 }
 
 declare global {
@@ -26,7 +28,6 @@ export const currentUser = (
 
   try {
     const payload = jwt.verify(req.session.jwt, keys.JWT_SECRET) as UserPayload;
-
     req.currentUser = payload;
   } catch (error) {}
 

@@ -12,9 +12,9 @@ class RequirementRepo {
         c_nc_cwr,
         requirement,
         note,
-        to_char(requirements.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+        to_char(requirements.created_at, 'YYYY-MM-DD HH24:MI:SS') as date
         FROM requirements
-        ORDER BY updated ASC;
+        ORDER BY date ASC;
         `
       );
       return result?.rows;
@@ -33,10 +33,10 @@ class RequirementRepo {
       c_nc_cwr,
       requirement,
       note,
-      to_char(requirements.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+      to_char(requirements.created_at, 'YYYY-MM-DD HH24:MI:SS') as date
       FROM requirements
       WHERE rfq_id = $1
-      ORDER BY updated ASC;
+      ORDER BY date ASC;
       `,
         [rfq_id]
       );
@@ -56,7 +56,7 @@ class RequirementRepo {
         c_nc_cwr,
         requirement,
         note,
-        to_char(requirements.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+        to_char(requirements.created_at, 'YYYY-MM-DD HH24:MI:SS') as date
         FROM requirements WHERE id = $1;`,
         [id]
       );
@@ -87,12 +87,6 @@ class RequirementRepo {
       throw new BadRequestError(error.message);
     }
   }
-
-  // id,
-  // rfq_id,
-  // c_nc_cwr,
-  // requirement,
-  // note,
 
   static async updateData({
     id,

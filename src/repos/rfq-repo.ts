@@ -32,19 +32,23 @@ class RfqRepo {
       const result = await pool.query(
         `
         SELECT
-          r.id,
-          rfq_code,
-          eau,
-          customers.name AS customer,
-          distributors.name AS distributor,
-          pm.shortname AS pm,
-          kam.shortname AS kam,
-          to_char(r.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
-          FROM rfqs AS r
-          JOIN customers ON customers.id = r.customer_id
-          JOIN distributors ON distributors.id = r.distributor_id
-          JOIN users AS pm ON pm.id = r.pm_id
-          JOIN users AS kam ON kam.id = r.kam_id
+        r.id,
+            rfq_code,
+            eau,
+            customer_id,
+            customers.name AS customer,
+            distributor_id,
+            distributors.name AS distributor,
+            pm_id,
+            pm.shortname AS pm,
+            kam_id,
+            kam.shortname AS kam,
+            to_char(r.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+            FROM rfqs AS r
+            JOIN customers ON customers.id = r.customer_id
+            JOIN distributors ON distributors.id = r.distributor_id
+            JOIN users AS pm ON pm.id = r.pm_id
+            JOIN users AS kam ON kam.id = r.kam_id
         WHERE r.id = $1
         `,
         [id]
