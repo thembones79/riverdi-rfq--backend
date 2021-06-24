@@ -8,7 +8,7 @@ class UserRepo {
         `
         SELECT id, username, username AS name, email, shortname, role_id
         FROM users
-        WHERE role_id <> 1
+        WHERE role_id <> 1 AND deleted = false
         ORDER BY username;
         `
       );
@@ -21,7 +21,7 @@ class UserRepo {
   static async findById(id: string) {
     try {
       const result = await pool.query(
-        `SELECT id, username, email, shortname FROM users WHERE id = $1;`,
+        `SELECT id, username, email, shortname, role_id FROM users WHERE id = $1;`,
         [id]
       );
       return result?.rows[0];
@@ -33,7 +33,7 @@ class UserRepo {
   static async findByEmail(email: string) {
     try {
       const result = await pool.query(
-        `SELECT id, username, email, password, shortname FROM users WHERE email = $1;`,
+        `SELECT id, username, email, password, shortname, role_id FROM users WHERE email = $1;`,
         [email]
       );
       return result?.rows[0];
@@ -57,7 +57,7 @@ class UserRepo {
   }) {
     try {
       const result = await pool.query(
-        `INSERT INTO users (username, password, email, shortname, role_id) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, email, shortname;`,
+        `INSERT INTO users (username, password, email, shortname, role_id) VALUES ($1, $2, $3, $4, $5) RETURNING id, username, email, shortname, role_id;`,
         [username, password, email, shortname, role_id]
       );
       return result?.rows[0];
@@ -81,7 +81,7 @@ class UserRepo {
   }) {
     try {
       const result = await pool.query(
-        `UPDATE users SET username = $2, email = $3, shortname = $4, role_id = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING id, username, email, shortname;`,
+        `UPDATE users SET username = $2, email = $3, shortname = $4, role_id = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING id, username, email, shortname, role_id;`,
         [id, username, email, shortname, role_id]
       );
       return result?.rows[0];
@@ -99,7 +99,7 @@ class UserRepo {
   }) {
     try {
       const result = await pool.query(
-        `UPDATE users SET password = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING id, username, email;`,
+        `UPDATE users SET password = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING id, username, email, role_id, shortname;`,
         [password, id]
       );
       return result?.rows[0];
@@ -111,7 +111,7 @@ class UserRepo {
   static async delete(id: string) {
     try {
       const result = await pool.query(
-        `DELETE FROM users WHERE id = $1 RETURNING id, username, email;`,
+        `DELETE FROM users WHERE id = $1 RETURNING id, username, email, role_id, shortname;`,
         [id]
       );
       return result?.rows[0];
@@ -123,7 +123,7 @@ class UserRepo {
   static async markDeleted(id: string) {
     try {
       const result = await pool.query(
-        `UPDATE users SET deleted = TRUE WHERE id = $1 RETURNING id, username, email;`,
+        `UPDATE users SET deleted = TRUE WHERE id = $1 RETURNING id, username, email, role_id, shortname;`,
         [id]
       );
       return result?.rows[0];
