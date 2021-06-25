@@ -40,7 +40,7 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    if (req.currentUser?.roleId !== 1) {
+    if (req.currentUser?.role_id !== 1) {
       throw new NotAuthorizedError();
     }
 
@@ -64,7 +64,7 @@ router.post(
         id: user.id,
         email: user.email,
         username: user.username,
-        roleId: user.role_id,
+        role_id: user.role_id,
       },
       keys.JWT_SECRET
     );

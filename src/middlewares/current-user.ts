@@ -6,7 +6,7 @@ interface UserPayload {
   id: string;
   email: string;
   username: string;
-  roleId: number;
+  role_id: number;
 }
 
 declare global {
