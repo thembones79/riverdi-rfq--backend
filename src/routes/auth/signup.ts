@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post(
   "/api/v1/users/signup",
-  requireAuth,
+
   [
     body("email")
       .trim()
