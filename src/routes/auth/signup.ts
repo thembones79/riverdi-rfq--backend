@@ -39,11 +39,13 @@ router.post(
       .withMessage("You must supply a RoleId"),
   ],
   validateRequest,
+
   async (req: Request, res: Response) => {
+    /*
     if (req.currentUser?.role_id !== 1) {
       throw new NotAuthorizedError();
     }
-
+*/
     const { email, password, username, shortname, role_id } = req.body;
     const existingUser = await UserRepo.findByEmail(email);
     if (existingUser) {
