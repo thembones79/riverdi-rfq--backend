@@ -8,7 +8,7 @@ import { generateRfqCode } from "../../services/rfqNoGenerator";
 const router = express.Router();
 
 router.post(
-  "/api/v1/rfqs",
+  "/rfqs",
   requireAuth,
   [
     body("eau")

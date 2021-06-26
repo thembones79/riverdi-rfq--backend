@@ -8,7 +8,7 @@ import { RfqRepo } from "../../repos/rfq-repo";
 const router = express.Router();
 
 router.put(
-  "/api/v1/rfqs/:id",
+  "/rfqs/:id",
   requireAuth,
   [
     body("eau")

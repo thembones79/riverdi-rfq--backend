@@ -36,7 +36,7 @@ app.use(
   })
 );
 app.use(currentUser);
-app.use(router);
+app.use("/api/v1", router);
 
 app.all("*", async () => {
   throw new NotFoundError();

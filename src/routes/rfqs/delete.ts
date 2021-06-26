@@ -6,7 +6,7 @@ import { RfqRepo } from "../../repos/rfq-repo";
 
 const router = express.Router();
 
-router.delete("/api/v1/rfqs/:id", requireAuth, async (req, res) => {
+router.delete("/rfqs/:id", requireAuth, async (req, res) => {
   const { id } = req.params;
 
   let existingRfq = await RfqRepo.findById(id);

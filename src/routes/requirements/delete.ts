@@ -6,7 +6,7 @@ import { RequirementRepo } from "../../repos/requirement-repo";
 
 const router = express.Router();
 
-router.delete("/api/v1/requirements/:id", requireAuth, async (req, res) => {
+router.delete("/requirements/:id", requireAuth, async (req, res) => {
   const { id } = req.params;
 
   let existingRequirement = await RequirementRepo.findById(id);

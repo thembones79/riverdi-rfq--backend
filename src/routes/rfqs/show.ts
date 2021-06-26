@@ -5,7 +5,7 @@ import { NotFoundError } from "../../errors";
 
 const router = express.Router();
 
-router.get("/api/v1/rfqs/:id", requireAuth, async (req, res) => {
+router.get("/rfqs/:id", requireAuth, async (req, res) => {
   const { id } = req.params;
   const rfq = await RfqRepo.findById(id);
 

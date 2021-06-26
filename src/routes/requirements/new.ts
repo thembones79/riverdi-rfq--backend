@@ -7,7 +7,7 @@ import { RequirementRepo } from "../../repos/requirement-repo";
 const router = express.Router();
 
 router.post(
-  "/api/v1/requirements",
+  "/requirements",
   requireAuth,
   [
     body("rfq_id")

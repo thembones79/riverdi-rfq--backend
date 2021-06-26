@@ -11,7 +11,7 @@ import { Password } from "../../services/password";
 const router = express.Router();
 
 router.post(
-  "/api/v1/users/signup",
+  "/users/signup",
   requireAuth,
   [
     body("email")

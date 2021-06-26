@@ -4,7 +4,7 @@ import { RequirementRepo } from "../../repos/requirement-repo";
 
 const router = express.Router();
 
-router.get("/api/v1/rfqs/:id/requirements", requireAuth, async (req, res) => {
+router.get("/rfqs/:id/requirements", requireAuth, async (req, res) => {
   const { id } = req.params;
   const requirements = await RequirementRepo.findByRfqId(id);
   res.send(requirements);

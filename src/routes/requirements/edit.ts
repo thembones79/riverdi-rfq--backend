@@ -9,7 +9,7 @@ import { RfqRepo } from "../../repos/rfq-repo";
 const router = express.Router();
 
 router.put(
-  "/api/v1/requirements/:id",
+  "/requirements/:id",
   requireAuth,
   [
     body("rfq_id")

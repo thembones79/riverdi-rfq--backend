@@ -4,7 +4,7 @@ import { UserRepo } from "../../repos/user-repo";
 
 const router = express.Router();
 
-router.get("/api/v1/users", requireAuth, async (req, res) => {
+router.get("/users", requireAuth, async (req, res) => {
   const users = await UserRepo.find();
   res.send(users);
 });

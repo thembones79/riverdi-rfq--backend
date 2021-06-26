@@ -11,7 +11,7 @@ import { keys } from "../../config/keys";
 const router = express.Router();
 
 router.post(
-  "/api/v1/users/login",
+  "/users/login",
   [
     body("email")
       .trim()

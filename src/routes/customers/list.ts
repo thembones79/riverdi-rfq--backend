@@ -4,7 +4,7 @@ import { CustomerRepo } from "../../repos/customer-repo";
 
 const router = express.Router();
 
-router.get("/api/v1/customers", requireAuth, async (req, res) => {
+router.get("/customers", requireAuth, async (req, res) => {
   const users = await CustomerRepo.find();
   res.send(users);
 });

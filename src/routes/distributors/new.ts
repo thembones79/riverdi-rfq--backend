@@ -8,7 +8,7 @@ import { DistributorRepo } from "../../repos/distributor-repo";
 const router = express.Router();
 
 router.post(
-  "/api/v1/distributors",
+  "/distributors",
   requireAuth,
   [
     body("name")

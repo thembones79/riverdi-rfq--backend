@@ -8,7 +8,7 @@ import { DistributorRepo } from "../../repos/distributor-repo";
 const router = express.Router();
 
 router.put(
-  "/api/v1/distributors/:id",
+  "/distributors/:id",
   requireAuth,
   [
     body("name")
