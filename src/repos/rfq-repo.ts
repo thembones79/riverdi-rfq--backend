@@ -73,6 +73,18 @@ class RfqRepo {
     }
   }
 
+  static async findByDistributorId(distributor_id: string) {
+    try {
+      const result = await pool.query(
+        `SELECT id, rfq_code FROM rfqs WHERE distributor_id = $1;`,
+        [distributor_id]
+      );
+      return result?.rows;
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
+  }
+
   static async insert({
     rfq_code,
     eau,
