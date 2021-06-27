@@ -1,11 +1,9 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import jwt from "jsonwebtoken";
 
 import { validateRequest, requireAuth } from "../../middlewares";
 import { BadRequestError, NotAuthorizedError } from "../../errors";
 import { UserRepo } from "../../repos/user-repo";
-import { keys } from "../../config/keys";
 import { Password } from "../../services/password";
 
 const router = express.Router();
@@ -23,6 +21,16 @@ router.post(
       .trim()
       .isLength({ min: 4, max: 20 })
       .withMessage("Password must be between 4 and 20 characters"),
+    body("passwordConfirm")
+      .custom((value, { req }) => {
+        if (value !== req.body.password) {
+          throw new BadRequestError(
+            "Password confirmation does not match password"
+          );
+        }
+        return true;
+      })
+      .withMessage("Passwords are not equal"),
     body("username")
       .trim()
       .isLength({ min: 2, max: 30 })
@@ -58,20 +66,6 @@ router.post(
       shortname,
       role_id,
     });
-
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        role_id: user.role_id,
-      },
-      keys.JWT_SECRET
-    );
-
-    req.session = {
-      jwt: userJwt,
-    };
 
     res.status(201).send(user);
   }

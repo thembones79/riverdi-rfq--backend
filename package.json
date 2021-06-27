@@ -1,6 +1,6 @@
 {
   "name": "riverdi-rfq--backend",
-  "version": "0.9.1",
+  "version": "1.0.0",
   "description": "Backend written in Node.js, Typescript for Rivedi RFQ system",
   "main": "index.js",
   "engines": {
