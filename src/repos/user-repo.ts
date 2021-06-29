@@ -18,6 +18,22 @@ class UserRepo {
     }
   }
 
+  static async findWithAdmins() {
+    try {
+      const result = await pool.query(
+        `
+        SELECT id, username, username AS name, email, shortname, role_id
+        FROM users
+        WHERE deleted = false
+        ORDER BY username;
+        `
+      );
+      return result?.rows;
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
+  }
+
   static async findById(id: string) {
     try {
       const result = await pool.query(
@@ -33,7 +49,7 @@ class UserRepo {
   static async findByEmail(email: string) {
     try {
       const result = await pool.query(
-        `SELECT id, username, email, password, shortname, role_id FROM users WHERE email = $1;`,
+        `SELECT id, username, email, password, shortname, role_id, deleted FROM users WHERE email = $1;`,
         [email]
       );
       return result?.rows[0];
@@ -124,6 +140,18 @@ class UserRepo {
     try {
       const result = await pool.query(
         `UPDATE users SET deleted = TRUE WHERE id = $1 RETURNING id, username, email, role_id, shortname;`,
+        [id]
+      );
+      return result?.rows[0];
+    } catch (error) {
+      throw new BadRequestError(error.message);
+    }
+  }
+
+  static async markUndeleted(id: string) {
+    try {
+      const result = await pool.query(
+        `UPDATE users SET deleted = FALSE WHERE id = $1 RETURNING id, username, email, role_id, shortname;`,
         [id]
       );
       return result?.rows[0];

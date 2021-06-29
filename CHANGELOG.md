@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2021-06-29
+
+### 🔥 Added
+
+- disable `login` feature for "deleted" users
+- logic for updating user data on PUT `/api/v1/users/:id` route
+- logic for updating user's password on PUT `/api/v1/users/:id/changepassword` route
+- logic for listing ALL users (admins included) for management purposes on GET `/api/v1/usersandadmins` route
+- logic for marking users as deleted on POST `/api/v1/users/disable` route
+- logic for marking users as undeleted on POST `/api/v1/users/enable` route
+
 ## [1.0.0] - 2021-06-27
 
 ### 🔥 Added

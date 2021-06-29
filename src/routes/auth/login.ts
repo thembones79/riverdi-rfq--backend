@@ -34,6 +34,10 @@ router.post(
       throw new BadRequestError("Invalid credentials");
     }
 
+    if (existingUser.deleted) {
+      throw new BadRequestError("You are not allowed to log in");
+    }
+
     const passwordsMatch: boolean = await Password.compare(
       existingUser.password,
       password
