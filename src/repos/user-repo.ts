@@ -22,8 +22,9 @@ class UserRepo {
     try {
       const result = await pool.query(
         `
-        SELECT id, username, username AS name, email, shortname, role_id
+        SELECT users.id AS id, username, username AS name, email, shortname, role_id, role
         FROM users
+        JOIN roles ON roles.id = users.role_id
         WHERE deleted = false
         ORDER BY username;
         `
