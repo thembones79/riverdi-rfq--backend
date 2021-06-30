@@ -29,6 +29,10 @@ router.post(
       throw new BadRequestError("User does not exist");
     }
 
+    if (req.currentUser?.email === existingUser.email) {
+      throw new BadRequestError("You can't delete yourself");
+    }
+
     const user = await UserRepo.markDeleted(id);
 
     res.status(201).send(user);
