@@ -2,7 +2,10 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 
 import { validateRequest, requireAuth } from "../../middlewares";
+import { spFileCreate } from "../../services/spFileCreate";
+import { BadRequestError } from "../../errors";
 import { RfqRepo } from "../../repos/rfq-repo";
+import { UserRepo } from "../../repos/user-repo";
 import { generateRfqCode } from "../../services/rfqNoGenerator";
 
 const router = express.Router();
@@ -41,6 +44,11 @@ router.post(
   async (req: Request, res: Response) => {
     const { eau, customer_id, distributor_id, pm_id, kam_id } = req.body;
 
+    const kam = await UserRepo.findById(kam_id);
+    if (!kam) {
+      throw new BadRequestError("KAM does not exist");
+    }
+
     let rfq_code = generateRfqCode(customer_id);
     let existingRfq = await RfqRepo.findByRfqCode(rfq_code);
     while (existingRfq) {
@@ -56,6 +64,8 @@ router.post(
       pm_id,
       kam_id,
     });
+
+    await spFileCreate({ kam: kam.shortname, rfq_code });
 
     res.status(201).send(rfq);
   }

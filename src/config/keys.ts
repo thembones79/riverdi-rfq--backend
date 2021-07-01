@@ -6,6 +6,9 @@ export interface IKeys {
   PGDATABASE: string;
   PGUSER: string;
   PGPASSWORD: string;
+  SP_USERNAME: string;
+  SP_PASSWORD: string;
+  SP_DOMAIN: string;
 }
 
 let keys: IKeys;
