@@ -28,6 +28,16 @@ if (!process.env.PGPASSWORD) {
   throw new Error("PGPASSWORD must be defined");
 }
 
+if (!process.env.SP_USERNAME) {
+  throw new Error("SP_USERNAME must be defined");
+}
+if (!process.env.SP_PASSWORD) {
+  throw new Error("SP_PASSWORD must be defined");
+}
+if (!process.env.SP_DOMAIN) {
+  throw new Error("SP_DOMAIN must be defined");
+}
+
 export const keys: IKeys = {
   JWT_SECRET: process.env.JWT_SECRET,
   CLIENT_ORIGIN: process.env.CLIENT_ORIGIN,
@@ -36,4 +46,7 @@ export const keys: IKeys = {
   PGDATABASE: process.env.PGDATABASE,
   PGUSER: process.env.PGUSER,
   PGPASSWORD: process.env.PGPASSWORD,
+  SP_USERNAME: process.env.SP_USERNAME,
+  SP_PASSWORD: process.env.SP_PASSWORD,
+  SP_DOMAIN: process.env.SP_DOMAIN,
 };
