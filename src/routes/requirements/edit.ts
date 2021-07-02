@@ -25,9 +25,8 @@ router.put(
     body("requirement")
       .trim()
       .notEmpty()
-      .escape()
       .withMessage("You must supply a requirement"),
-    body("note").trim().escape(),
+    body("note").trim(),
   ],
   validateRequest,
   async (req: Request, res: Response) => {

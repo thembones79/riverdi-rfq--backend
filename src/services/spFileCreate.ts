@@ -22,7 +22,7 @@ const creds = {
 export const spFileCreate = async ({ kam, rfq_code }: IspFileCreate) => {
   const fileOptions = {
     folder: `Shared Documents/RIVERDI PROJECTS/${kam}_!PROSPECTS/${rfq_code}`,
-    fileName: "_",
+    fileName: "❤️",
     fileContent: " ",
   };
 
