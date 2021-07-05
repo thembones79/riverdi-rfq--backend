@@ -7,6 +7,7 @@ import { BadRequestError } from "../../errors";
 import { RfqRepo } from "../../repos/rfq-repo";
 import { UserRepo } from "../../repos/user-repo";
 import { generateRfqCode } from "../../services/rfqNoGenerator";
+import { ClickUp } from "../../services/clickup";
 
 const router = express.Router();
 
@@ -49,12 +50,21 @@ router.post(
       throw new BadRequestError("KAM does not exist");
     }
 
+    const pm = await UserRepo.findById(pm_id);
+    if (!pm) {
+      throw new BadRequestError("PM does not exist");
+    }
+
+    const pmEmail = pm.email as string;
+
     let rfq_code = generateRfqCode(customer_id);
     let existingRfq = await RfqRepo.findByRfqCode(rfq_code);
     while (existingRfq) {
       rfq_code = generateRfqCode(customer_id);
       existingRfq = await RfqRepo.findByRfqCode(rfq_code);
     }
+
+    const clickupId = await ClickUp.createTask({ pmEmail, rfqCode: rfq_code });
 
     const rfq = await RfqRepo.insert({
       rfq_code,
@@ -63,6 +73,7 @@ router.post(
       distributor_id,
       pm_id,
       kam_id,
+      clickup_id: clickupId,
     });
 
     await spFileCreate({ kam: kam.shortname, rfq_code });

@@ -31,11 +31,21 @@ if (!process.env.PGPASSWORD) {
 if (!process.env.SP_USERNAME) {
   throw new Error("SP_USERNAME must be defined");
 }
+
 if (!process.env.SP_PASSWORD) {
   throw new Error("SP_PASSWORD must be defined");
 }
+
 if (!process.env.SP_DOMAIN) {
   throw new Error("SP_DOMAIN must be defined");
+}
+
+if (!process.env.CLICKUP_APP_SECRET) {
+  throw new Error("CLICKUP_APP_SECRET must be defined");
+}
+
+if (!process.env.CLICKUP_API_SECRET) {
+  throw new Error("CLICKUP_API_SECRET must be defined");
 }
 
 export const keys: IKeys = {
@@ -49,4 +59,6 @@ export const keys: IKeys = {
   SP_USERNAME: process.env.SP_USERNAME,
   SP_PASSWORD: process.env.SP_PASSWORD,
   SP_DOMAIN: process.env.SP_DOMAIN,
+  CLICKUP_APP_SECRET: process.env.CLICKUP_APP_SECRET,
+  CLICKUP_API_SECRET: process.env.CLICKUP_API_SECRET,
 };
