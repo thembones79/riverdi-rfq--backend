@@ -35,6 +35,7 @@ class RfqRepo {
         r.id,
               rfq_code,
               eau,
+              clickup_id,
               customer_id,
               customers.name AS customer,
               distributor_id,
@@ -92,6 +93,7 @@ class RfqRepo {
     distributor_id,
     pm_id,
     kam_id,
+    clickup_id,
   }: {
     rfq_code: string;
     eau: string;
@@ -99,11 +101,12 @@ class RfqRepo {
     distributor_id: string;
     pm_id: string;
     kam_id: string;
+    clickup_id: string;
   }) {
     try {
       const result = await pool.query(
-        `INSERT INTO rfqs (rfq_code, eau, customer_id, distributor_id, pm_id, kam_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, rfq_code;`,
-        [rfq_code, eau, customer_id, distributor_id, pm_id, kam_id]
+        `INSERT INTO rfqs (rfq_code, eau, customer_id, distributor_id, pm_id, kam_id, clickup_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, rfq_code;`,
+        [rfq_code, eau, customer_id, distributor_id, pm_id, kam_id, clickup_id]
       );
       return result?.rows[0];
     } catch (error) {

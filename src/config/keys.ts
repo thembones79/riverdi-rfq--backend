@@ -9,6 +9,8 @@ export interface IKeys {
   SP_USERNAME: string;
   SP_PASSWORD: string;
   SP_DOMAIN: string;
+  CLICKUP_APP_SECRET: string;
+  CLICKUP_API_SECRET: string;
 }
 
 let keys: IKeys;
