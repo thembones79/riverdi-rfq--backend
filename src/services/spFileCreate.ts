@@ -27,6 +27,7 @@ export const spFileCreate = async ({ kam, rfq_code }: IspFileCreate) => {
   };
 
   try {
+    console.log({ coreOptions, creds, fileOptions });
     await spsave(coreOptions, creds, fileOptions);
   } catch (error) {
     console.log(error);
