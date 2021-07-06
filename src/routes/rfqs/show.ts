@@ -14,9 +14,18 @@ router.get("/rfqs/:id", requireAuth, async (req, res) => {
     throw new NotFoundError();
   }
 
-  const status = await ClickUp.getTaskStatus(rfq.clickup_id);
-  rfq = { ...rfq, status };
-  console.log({ rfq });
+  let status = "task not found";
+
+  try {
+    status = await ClickUp.getTaskStatus(rfq.clickup_id);
+  } catch (error) {
+    console.error({ error });
+  }
+
+  if (status) {
+    rfq = { ...rfq, status };
+  }
+
   res.send(rfq);
 });
 

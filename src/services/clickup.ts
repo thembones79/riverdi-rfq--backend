@@ -71,7 +71,7 @@ export class ClickUp {
           headers: { Authorization: keys.CLICKUP_API_SECRET },
         }
       );
-      console.log(response.data.status.status);
+
       return response.data.status.status;
     } catch (e) {
       console.warn(e);
