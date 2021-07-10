@@ -20,6 +20,10 @@ beforeEach(async () => {
   await context?.reset();
 });
 
+afterEach(async () => {
+  await context?.reset();
+});
+
 afterAll(async () => {
   await context?.close();
 });
@@ -28,8 +32,9 @@ global.login = async (role_id = 1) => {
   const authResponse = await request(app)
     .post("/api/v1/users/signup")
     .send({
-      email: `test${role_id}@test.com`,
+      email: `michal@unisystem.pl`,
       password: `password`,
+      passwordConfirm: "password",
       username: `test${role_id}`,
       shortname: `QWERTY${role_id}`,
       role_id,

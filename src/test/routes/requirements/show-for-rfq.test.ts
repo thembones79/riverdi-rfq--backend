@@ -17,7 +17,7 @@ it("responds with rfq details", async () => {
     .expect(201);
 
   await request(app)
-    .post(`/api/v1/rfqs/requirements`)
+    .post(`/api/v1/requirements`)
     .set("Cookie", cookie)
     .send({
       rfq_id: newRfq.body.id,

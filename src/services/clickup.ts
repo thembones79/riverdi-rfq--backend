@@ -16,7 +16,8 @@ interface IClickUpUser {
   user: ITeamMember;
 }
 
-const CLICKUP_RIVERDI_SUBCATEGORY = 55059859;
+const CLICKUP_RIVERDI_SUBCATEGORY =
+  process.env.NODE_ENV === "production" ? 55059859 : 65635652;
 
 export class ClickUp {
   static async findUserId(email: string) {
@@ -45,14 +46,14 @@ export class ClickUp {
 
     try {
       const response = await axios.post(
-        `https://app.clickup.com/v1/subcategory/${CLICKUP_RIVERDI_SUBCATEGORY}/task`,
+        `https://api.clickup.com/api/v2/list/${CLICKUP_RIVERDI_SUBCATEGORY}/task`,
         {
           name: rfqCode,
           assignees: [userId],
           status: "open projects",
         },
         {
-          headers: { Authorization: keys.CLICKUP_APP_SECRET },
+          headers: { Authorization: keys.CLICKUP_API_SECRET },
         }
       );
 

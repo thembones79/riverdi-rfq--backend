@@ -60,6 +60,8 @@ export class Context {
     await pool.query(`INSERT INTO customers(id, name) VALUES (1, 'ABCD');`);
     await pool.query(`INSERT INTO distributors(name) VALUES ('EFGH');`);
 
+    jest.setTimeout(30000);
+
     return new Context(roleName);
   }
 
@@ -91,6 +93,7 @@ export class Context {
     await pool.query(format("DROP ROLE %I;", this.roleName));
 
     // Disconnect
+
     await pool.close();
   }
 }

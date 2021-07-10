@@ -35,7 +35,7 @@ router.post(
 
     const user = await UserRepo.markDeleted(id);
 
-    res.status(201).send(user);
+    res.status(200).send(user);
   }
 );
 

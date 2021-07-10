@@ -51,7 +51,7 @@ router.put(
       note,
     });
 
-    res.status(201).send(updatedRequirement);
+    res.status(200).send(updatedRequirement);
   }
 );
 

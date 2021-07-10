@@ -32,7 +32,7 @@ router.put(
       name,
     });
 
-    res.status(201).send(newDistributor);
+    res.status(200).send(newDistributor);
   }
 );
 
