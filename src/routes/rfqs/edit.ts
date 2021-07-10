@@ -56,7 +56,7 @@ router.put(
       kam_id,
     });
 
-    res.status(201).send(rfq);
+    res.status(200).send(rfq);
   }
 );
 

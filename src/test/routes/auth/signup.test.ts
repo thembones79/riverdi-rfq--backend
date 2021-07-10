@@ -8,6 +8,7 @@ it("returns a 201 on successful signup", async () => {
     .send({
       email: "test@test.com",
       password: "passwordpassword",
+      passwordConfirm: "passwordpassword",
       username: "test",
       shortname: "QWERTY",
       role_id: 1,
@@ -22,6 +23,7 @@ it("creates a user", async () => {
     .send({
       email: "test@test.com",
       password: "passwordpassword",
+      passwordConfirm: "passwordpassword",
       username: "test",
       shortname: "QWERTY",
       role_id: 1,
@@ -38,6 +40,7 @@ it("returns a 400 with invalid email", async () => {
     .send({
       email: "test@tes@@t.com",
       password: "password",
+      passwordConfirm: "password",
       username: "test",
       shortname: "QWERTY",
       role_id: 1,
@@ -52,6 +55,7 @@ it("returns a 400 with invalid password", async () => {
       email: "test@test.com",
       username: "testtest",
       password: "pa",
+      passwordConfirm: "password",
       shortname: "QWERTY",
       role_id: 1,
     })
@@ -68,6 +72,7 @@ it("disallows duplicate emails", async () => {
     .send({
       email: "test@test.com",
       password: "password",
+      passwordConfirm: "password",
       username: "test",
       shortname: "QWERTY",
       role_id: 1,
@@ -79,6 +84,7 @@ it("disallows duplicate emails", async () => {
     .send({
       email: "test@test.com",
       password: "password",
+      passwordConfirm: "password",
       username: "test",
       shortname: "QWERTY",
       role_id: 1,
@@ -92,6 +98,7 @@ it("sets a cookie after successful signup", async () => {
     .send({
       email: "test@test.com",
       password: "password",
+      passwordConfirm: "password",
       username: "test",
       shortname: "QWERTY",
       role_id: 1,

@@ -9,7 +9,7 @@ it("responds with details about the current user", async () => {
     .send()
     .expect(200);
 
-  expect(response.body.currentUser.email).toEqual("test1@test.com");
+  expect(response.body.currentUser.email).toEqual("michal@unisystem.pl");
 });
 
 it("responds with null if not authenticated", async () => {

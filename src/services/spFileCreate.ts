@@ -13,15 +13,18 @@ const coreOptions = {
   checkin: true,
   checkinType: 1,
 };
+
 const creds = {
   username: keys.SP_USERNAME,
   password: keys.SP_PASSWORD,
   domain: keys.SP_DOMAIN,
 };
 
+const pathModifier = process.env.NODE_ENV === "production" ? "" : "testing/";
+
 export const spFileCreate = async ({ kam, rfq_code }: IspFileCreate) => {
   const fileOptions = {
-    folder: `Shared Documents/RIVERDI PROJECTS/${kam}_!PROSPECTS/${rfq_code}`,
+    folder: `Shared Documents/RIVERDI PROJECTS/${pathModifier}${kam}_!PROSPECTS/${rfq_code}`,
     fileName: "❤️",
     fileContent: " ",
   };
