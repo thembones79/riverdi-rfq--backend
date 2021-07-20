@@ -1,8 +1,12 @@
 ![Logo](static/riverdiRfqLogo.png)
 
-# `Backend` written in Node.js & Typescript for **Riverdi RFQ** system
+# `Backend` in Node.js & Typescript for **Riverdi RFQ** System
+
+<hr>
 
 **Notice: This project is a REST API that is ment to work with frontend [Link](link)**
+
+  <hr>
 
 > The sole purpose of this project is to fullfill requirements of **[Riverdi](https://riverdi.com)** stakeholders (Riverdi Sales Department) in terms of creating an application for convienient **RFQ** (_Request For Quotation_) mangement and integrate it with current workflows that are run in [Comarch ERP XL](https://www.comarch.pl/erp/xl/), [ClickUp](https://clickup.com/) and [SharePoint](https://www.microsoft.com/pl-pl/microsoft-365/sharepoint/collaboration).
 
