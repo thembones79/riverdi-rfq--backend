@@ -2,7 +2,7 @@
 
 # `Backend` in Node.js & Typescript for **Riverdi RFQ** System
 
-**Notice: This project is a REST API that is ment to work with frontend [Link](link)**
+**Notice: This project is a REST API that is ment to work with [frontend GUI](link)**
 
 <hr>
 
@@ -13,7 +13,7 @@
 ## Main Features
 
 - Add new RFQs
-- Generate unique RFQ code
+- Generate unique RFQ code (based on specification)
 - list RFQs
 - sort RFQs (handled on frontend)
 - filter RFQs (handled on frontend)
@@ -28,6 +28,14 @@
 ![Data Model](static/riverdiRfqDataModel.png)
 
 ## Migrations
+
+In order to tie the database structure to the code (helpful when working with other engineers) I had to use **`schema migrations`** (_code that describes a precise change to make to the database_).
+
+The tool of the choice is [node-pg-migrate](https://github.com/salsita/node-pg-migrate). All migratrons are written in plain SQL.
+
+> What are **`schema migrations`** and how to use **node-pg-migrate** is out of the scope of this document.
+
+### Example
 
 ## Data Layer Logic
 
