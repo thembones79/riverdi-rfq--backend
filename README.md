@@ -50,30 +50,21 @@ They should be used in controller business logic instead of operating directly o
 #### Method:
 
 ```Javascript
-UserRepo.find()
+UserRepo.find();
 ```
 
 #### Arguments: `none`
 
-#### Response:
+#### Response (`Array` of `Objects`):
 
 ```Javascript
-[{id: string; username, name, email, shortname, role_id}]
+[{id, username, name, email, shortname, role_id}]
 ```
 
-```Typescript
-[{id: string; username, name, email, shortname, role_id}]
-```
+> Returns list of all users that are not admins and are not marked as `deleted`.
 
-```Javascript
-[{id: string; username, name, email, shortname, role_id}]
-```
+---
 
-```Typescript
-[{id: string; username, name, email, shortname, role_id}]
-```
-
-<hr>
 ## API (endpoints documentation)
 
 ## Tests
