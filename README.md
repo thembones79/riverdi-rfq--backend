@@ -35,9 +35,27 @@ The tool of the choice is [node-pg-migrate](https://github.com/salsita/node-pg-m
 
 > What are **`schema migrations`** and how to use **node-pg-migrate** is out of the scope of this document.
 
-### Example
-
 ## Data Layer Logic
+
+I've created separate layer of utility methods to handle database operations.
+
+They should be used in controller business logic instead of operating directly on database.
+
+### User Repo
+
+#### Method:
+
+```Javascript
+UserRepo.find()
+```
+
+#### Arguments: `none`
+
+#### Response:
+
+```Javascript
+[{id, username, name, email, shortname, role_id}]
+```
 
 ## API (endpoints documentation)
 
