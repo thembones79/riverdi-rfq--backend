@@ -41,7 +41,11 @@ I've created separate layer of utility methods to handle database operations.
 
 They should be used in controller business logic instead of operating directly on database.
 
+---
+
 ### User Repo
+
+---
 
 #### Method:
 
@@ -54,9 +58,22 @@ UserRepo.find()
 #### Response:
 
 ```Javascript
-[{id, username, name, email, shortname, role_id}]
+[{id: string; username, name, email, shortname, role_id}]
 ```
 
+```Typescript
+[{id: string; username, name, email, shortname, role_id}]
+```
+
+```Javascript
+[{id: string; username, name, email, shortname, role_id}]
+```
+
+```Typescript
+[{id: string; username, name, email, shortname, role_id}]
+```
+
+<hr>
 ## API (endpoints documentation)
 
 ## Tests
