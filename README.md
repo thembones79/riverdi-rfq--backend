@@ -107,7 +107,35 @@ UserRepo.findByEmail(email: string);
 {id, username, email, password, shortname, role_id, deleted}
 ```
 
-> Returns user with matching email (or returns empty object). Returned **hashed** password is for login locic purposes.
+> Returns user with matching email (or returns empty object). Returned **hashed** password is for login logic purposes.
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.insert({
+  username,
+  password,
+  email,
+  shortname,
+  role_id,
+}: {
+  username: string;
+  password: string;
+  email: string;
+  shortname: string;
+  role_id: string;
+});
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, shortname, role_id}
+```
+
+> Inserts new user into database. Shortname and email have to be unique. **Password should be srored in a hashed form!** _(route controller logic should handle that)_
 
 ---
 
