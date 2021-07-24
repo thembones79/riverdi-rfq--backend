@@ -53,8 +53,6 @@ They should be used in controller business logic instead of operating directly o
 UserRepo.find();
 ```
 
-#### Arguments: `none`
-
 #### Response (`Array` of `Objects`):
 
 ```Javascript
@@ -62,6 +60,54 @@ UserRepo.find();
 ```
 
 > Returns list of all users that are not admins and are not marked as `deleted`.
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.findWithAdmins();
+```
+
+#### Response (`Array` of `Objects`):
+
+```Javascript
+[{id, username, name, email, shortname, role_id}]
+```
+
+> Returns list of all users (admins included) that are not marked as `deleted`.
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.findById(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, shortname, role_id}
+```
+
+> Returns user with matching ID (or returns empty object).
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.findByEmail(email: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, password, shortname, role_id, deleted}
+```
+
+> Returns user with matching email (or returns empty object). Returned **hashed** password is for login locic purposes.
 
 ---
 
