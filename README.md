@@ -135,7 +135,57 @@ UserRepo.insert({
 {id, username, email, shortname, role_id}
 ```
 
-> Inserts new user into database. Shortname and email have to be unique. **Password should be srored in a hashed form!** _(route controller logic should handle that)_
+> Inserts new user into database. Shortname and email have to be unique. **Password should be stored in a hashed form!** _(route controller logic should handle that)_
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.updateData({
+  id,
+  username,
+  email,
+  shortname,
+  role_id,
+}: {
+  id: string;
+  username: string;
+  email: string;
+  shortname: string;
+  role_id: string;
+});
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, shortname, role_id}
+```
+
+> Updates existing user's data (only username, email, shortname and role_id). Shortname and email have to be unique. ID is immutable. Changing password is handled by dedicated method.
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.updatePassword({
+  id,
+  password,
+}: {
+  id: string;
+  password: string;
+});
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, shortname, role_id}
+```
+
+> Updates existing user's password. **Password should be provided in a hashed form!** _(route controller logic should handle that)_
 
 ---
 
