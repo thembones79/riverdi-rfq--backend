@@ -91,7 +91,7 @@ UserRepo.findById(id: string);
 {id, username, email, shortname, role_id}
 ```
 
-> Returns user with matching ID (or returns empty object).
+> Returns user with matching `id` (or returns empty object).
 
 ---
 
@@ -186,6 +186,182 @@ UserRepo.updatePassword({
 ```
 
 > Updates existing user's password. **Password should be provided in a hashed form!** _(route controller logic should handle that)_
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.delete(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, role_id, shortname}
+```
+
+> Removes user from database.
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.markDeleted(id: string)
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, role_id, shortname}
+```
+
+> Marks user ad "deleted". Disables user (from login, from preforming actions, from appearing on all kings of listings) but keeps all the data (transaction history, etc.)
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.markUndeleted(id: string)
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, username, email, role_id, shortname}
+```
+
+> Sets "deleted" flag to `false` (enables user).
+
+---
+
+#### Method:
+
+```Javascript
+UserRepo.count()
+```
+
+#### Response (`Number`):
+
+> Returns number of users.
+
+---
+
+### RFQ Repo
+
+---
+
+#### Method:
+
+```Javascript
+RfqRepo.find();
+```
+
+#### Response (`Array` of `Objects`):
+
+```Javascript
+[{id, rfq_code, eau, customer, distributor, pm, kam, updated}]
+```
+
+> Returns list of all rfqs
+
+---
+
+#### Method:
+
+```Javascript
+RfqRepo.findById(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{
+  id,
+  rfq_code,
+  eau,
+  clickup_id,
+  customer_id,
+  customer,
+  distributor_id,
+  distributor,
+  pm_id,
+  pm,
+  pm_fullname,
+  kam_id,
+  kam,
+  kam_fullname,
+  updated
+}
+```
+
+> Returns RFQ with matching `id`.
+
+---
+
+#### Method:
+
+```Javascript
+RfqRepo.findByDistributorId(distributor_id: string)
+```
+
+#### Response (`Array` of `Objects`):
+
+```Javascript
+[{id, rfq_code}]
+```
+
+> Returns list of all rfqs of distributor with matching `distributor_id`.
+
+---
+
+#### Method:
+
+```Javascript
+RfqRepo.findByRfqCode(rfq_code: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, rfq_code}
+```
+
+> Returns RFQ with matching `id`.
+
+---
+
+#### Method:
+
+```Javascript
+RfqRepo.insert({
+  rfq_code,
+  eau,
+  customer_id,
+  distributor_id,
+  pm_id,
+  kam_id,
+  clickup_id,
+}: {
+  rfq_code: string;
+  eau: string;
+  customer_id: string;
+  distributor_id: string;
+  pm_id: string;
+  kam_id: string;
+  clickup_id: string;
+});
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, rfq_code}
+```
+
+> Inserts new RFQ into database. `rfq_code` have to be unique.
 
 ---
 
