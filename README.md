@@ -365,6 +365,36 @@ RfqRepo.insert({
 
 ---
 
+#### Method:
+
+```Javascript
+RfqRepo.updateData({
+  id,
+  eau,
+  customer_id,
+  distributor_id,
+  pm_id,
+  kam_id,
+}: {
+  id: string;
+  eau: string;
+  customer_id: string;
+  distributor_id: string;
+  pm_id: string;
+  kam_id: string;
+});
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, rfq_code}
+```
+
+> Updates RFQ into database. `rfq_code` have to be unique.
+
+---
+
 ## API (endpoints documentation)
 
 ## Tests
