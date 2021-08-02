@@ -395,6 +395,328 @@ RfqRepo.updateData({
 
 ---
 
+#### Method:
+
+```Javascript
+RfqRepo.delete(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, rfq_code}
+```
+
+> Removes rfq from database.
+
+---
+
+#### Method:
+
+```Javascript
+RfqRepo.count()
+```
+
+#### Response (`Number`):
+
+> Returns number of rfqs.
+
+---
+
+### Requirement Repo
+
+---
+
+#### Method:
+
+```Javascript
+RequirementRepo.find();
+```
+
+#### Response (`Array` of `Objects`):
+
+```Javascript
+[{id, rfq_id, c_nc_cwr, requirement, note, date }]
+```
+
+> Returns list of all requirements
+
+---
+
+#### Method:
+
+```Javascript
+RequirementRepo.findByRfqId(rfq_id: string);
+```
+
+#### Response (`Array` of `Objects`):
+
+```Javascript
+[{id, rfq_id, c_nc_cwr, requirement, note, date }]
+```
+
+> Returns list of all requirements for given `rfq_id`
+
+---
+
+#### Method:
+
+```Javascript
+RequirementRepo.findById(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, rfq_id, c_nc_cwr, requirement, note, date }
+```
+
+> Returns requirement with matching `id`
+
+---
+
+#### Method:
+
+```Javascript
+RequirementRepo.insert({
+  rfq_id,
+  c_nc_cwr,
+  requirement,
+  note,
+}: {
+  rfq_id: string;
+  c_nc_cwr: string;
+  requirement: string;
+  note: string;
+});
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, rfq_id}
+```
+
+> Inserts new **requirement** into database.
+
+---
+
+#### Method:
+
+```Javascript
+RequirementRepo.updateData({
+  id,
+  rfq_id,
+  c_nc_cwr,
+  requirement,
+  note,
+}: {
+  id: string;
+  rfq_id: string;
+  c_nc_cwr: string;
+  requirement: string;
+  note: string;
+});
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, rfq_id, c_nc_cwr, requirement, note}
+```
+
+> Updates **requirement** with given `id` in the database.
+
+---
+
+#### Method:
+
+```Javascript
+RequirementRepo.delete(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id}
+```
+
+> Removes **requirement** from database.
+
+---
+
+#### Method:
+
+```Javascript
+RequirementRepo.count()
+```
+
+#### Response (`Number`):
+
+> Returns number of requirements.
+
+---
+
+### Distributor Repo
+
+---
+
+#### Method:
+
+```Javascript
+DistributorRepo.find();
+```
+
+#### Response (`Array` of `Objects`):
+
+```Javascript
+[{id, name }]
+```
+
+> Returns list of all distributors
+
+---
+
+#### Method:
+
+```Javascript
+DistributorRepo.findById(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, name }
+```
+
+> Returns distributor with matching `id`
+
+---
+
+#### Method:
+
+```Javascript
+DistributorRepo.findByName(name: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, name }
+```
+
+> Returns distributor with matching `name`
+
+---
+
+#### Method:
+
+```Javascript
+DistributorRepo.insert({ name }: { name: string });
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, name}
+```
+
+> Inserts new distributor into database.
+
+---
+
+#### Method:
+
+```Javascript
+DistributorRepo.updateData({ id, name }: { id: string; name: string });
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, name}
+```
+
+> Updates distributor with given `id` in the database.
+
+---
+
+#### Method:
+
+```Javascript
+DistributorRepo.delete(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, name}
+```
+
+> Removes distributor from database.
+
+---
+
+#### Method:
+
+```Javascript
+DistributorRepo.count()
+```
+
+#### Response (`Number`):
+
+> Returns number of distributors.
+
+---
+
+### Customer Repo
+
+---
+
+#### Method:
+
+```Javascript
+CustomerRepo.find();
+```
+
+#### Response (`Array` of `Objects`):
+
+```Javascript
+[{id, name }]
+```
+
+> Returns list of all customers
+
+---
+
+#### Method:
+
+```Javascript
+CustomerRepo.findById(id: string);
+```
+
+#### Response (`Object`):
+
+```Javascript
+{id, name }
+```
+
+> Returns customer with matching `id`
+
+---
+
+#### Method:
+
+```Javascript
+CustomerRepo.count()
+```
+
+#### Response (`Number`):
+
+> Returns number of customers.
+
+---
+
 ## API (endpoints documentation)
 
 ## Tests
