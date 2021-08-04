@@ -32,7 +32,7 @@ class RfqRepo {
       const result = await pool.query(
         `
         SELECT
-        r.id,
+              r.id,
               rfq_code,
               eau,
               clickup_id,
@@ -46,6 +46,11 @@ class RfqRepo {
               kam_id,
               kam.shortname AS kam,
               kam.username AS kam_fullname,
+              final_solutions,
+              conclusions,
+              samples_expected,
+              mp_expected,
+              eau_max,
               to_char(r.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
               FROM rfqs AS r
               JOIN customers ON customers.id = r.customer_id
@@ -94,6 +99,11 @@ class RfqRepo {
     pm_id,
     kam_id,
     clickup_id,
+    final_solutions,
+    conclusions,
+    samples_expected,
+    mp_expected,
+    eau_max,
   }: {
     rfq_code: string;
     eau: string;
@@ -102,11 +112,43 @@ class RfqRepo {
     pm_id: string;
     kam_id: string;
     clickup_id: string;
+    final_solutions: string;
+    conclusions: string;
+    samples_expected: string;
+    mp_expected: string;
+    eau_max: string;
   }) {
     try {
       const result = await pool.query(
-        `INSERT INTO rfqs (rfq_code, eau, customer_id, distributor_id, pm_id, kam_id, clickup_id) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id, rfq_code;`,
-        [rfq_code, eau, customer_id, distributor_id, pm_id, kam_id, clickup_id]
+        `INSERT INTO rfqs (
+          rfq_code,
+          eau,
+          customer_id,
+          distributor_id,
+          pm_id,
+          kam_id,
+          clickup_id,
+          final_solutions,
+          conclusions,
+          samples_expected,
+          mp_expected,
+          eau_max)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+          RETURNING id, rfq_code;`,
+        [
+          rfq_code,
+          eau,
+          customer_id,
+          distributor_id,
+          pm_id,
+          kam_id,
+          clickup_id,
+          final_solutions,
+          conclusions,
+          samples_expected,
+          mp_expected,
+          eau_max,
+        ]
       );
       return result?.rows[0];
     } catch (error) {
@@ -121,6 +163,11 @@ class RfqRepo {
     distributor_id,
     pm_id,
     kam_id,
+    final_solutions,
+    conclusions,
+    samples_expected,
+    mp_expected,
+    eau_max,
   }: {
     id: string;
     eau: string;
@@ -128,11 +175,41 @@ class RfqRepo {
     distributor_id: string;
     pm_id: string;
     kam_id: string;
+    final_solutions: string;
+    conclusions: string;
+    samples_expected: string;
+    mp_expected: string;
+    eau_max: string;
   }) {
     try {
       const result = await pool.query(
-        `UPDATE rfqs SET  eau = $2, customer_id = $3, distributor_id = $4, pm_id = $5, kam_id = $6, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING id, rfq_code;`,
-        [id, eau, customer_id, distributor_id, pm_id, kam_id]
+        `UPDATE rfqs SET
+          eau = $2,
+          customer_id = $3,
+          distributor_id = $4,
+          pm_id = $5,
+          kam_id = $6,
+          final_solutions = $7,
+          conclusions = $8,
+          samples_expected = $9,
+          mp_expected = $10,
+          eau_max = $11,
+          updated_at = CURRENT_TIMESTAMP
+          WHERE id = $1
+          RETURNING id, rfq_code;`,
+        [
+          id,
+          eau,
+          customer_id,
+          distributor_id,
+          pm_id,
+          kam_id,
+          final_solutions,
+          conclusions,
+          samples_expected,
+          mp_expected,
+          eau_max,
+        ]
       );
       return result?.rows[0];
     } catch (error) {

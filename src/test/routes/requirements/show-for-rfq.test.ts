@@ -13,6 +13,11 @@ it("responds with rfq details", async () => {
       distributor_id: 1,
       pm_id: 1,
       kam_id: 1,
+      final_solutions: "final",
+      conclusions: "my thoughts",
+      samples_expected: "someday",
+      mp_expected: "someday",
+      eau_max: 3330000,
     })
     .expect(201);
 
@@ -24,6 +29,7 @@ it("responds with rfq details", async () => {
       c_nc_cwr: "c",
       requirement: "new req",
       note: "new note",
+      priority: 0,
     })
     .expect(201);
 

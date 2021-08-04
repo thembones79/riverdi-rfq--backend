@@ -9,6 +9,7 @@ class RequirementRepo {
         SELECT
         id,
         rfq_id,
+        priority,
         c_nc_cwr,
         requirement,
         note,
@@ -30,13 +31,14 @@ class RequirementRepo {
       SELECT
       id,
       rfq_id,
+      priority,
       c_nc_cwr,
       requirement,
       note,
       to_char(requirements.created_at, 'YYYY-MM-DD HH24:MI:SS') as date
       FROM requirements
       WHERE rfq_id = $1
-      ORDER BY date ASC;
+      ORDER BY priority ASC;
       `,
         [rfq_id]
       );
@@ -53,6 +55,7 @@ class RequirementRepo {
         SELECT
         id,
         rfq_id,
+        priority,
         c_nc_cwr,
         requirement,
         note,
@@ -68,19 +71,21 @@ class RequirementRepo {
 
   static async insert({
     rfq_id,
+    priority,
     c_nc_cwr,
     requirement,
     note,
   }: {
     rfq_id: string;
+    priority: string;
     c_nc_cwr: string;
     requirement: string;
     note: string;
   }) {
     try {
       const result = await pool.query(
-        `INSERT INTO requirements (rfq_id, c_nc_cwr, requirement, note) VALUES ($1, $2, $3, $4) RETURNING id, rfq_id;`,
-        [rfq_id, c_nc_cwr, requirement, note]
+        `INSERT INTO requirements (rfq_id, c_nc_cwr, requirement, note, priority) VALUES ($1, $2, $3, $4, $5) RETURNING id, rfq_id;`,
+        [rfq_id, c_nc_cwr, requirement, note, priority]
       );
       return result?.rows[0];
     } catch (error) {
@@ -91,20 +96,22 @@ class RequirementRepo {
   static async updateData({
     id,
     rfq_id,
+    priority,
     c_nc_cwr,
     requirement,
     note,
   }: {
     id: string;
     rfq_id: string;
+    priority: string;
     c_nc_cwr: string;
     requirement: string;
     note: string;
   }) {
     try {
       const result = await pool.query(
-        `UPDATE requirements SET rfq_id = $2, c_nc_cwr = $3, requirement = $4, note = $5, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *;`,
-        [id, rfq_id, c_nc_cwr, requirement, note]
+        `UPDATE requirements SET rfq_id = $2, c_nc_cwr = $3, requirement = $4, note = $5, priority = $6, updated_at = CURRENT_TIMESTAMP WHERE id = $1 RETURNING *;`,
+        [id, rfq_id, c_nc_cwr, requirement, note, priority]
       );
       return result?.rows[0];
     } catch (error) {
