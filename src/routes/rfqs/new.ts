@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 
 import { validateRequest, requireAuth } from "../../middlewares";
+import { keys } from "../../config/keys";
 import { spFileCreate } from "../../services/spFileCreate";
 import { BadRequestError } from "../../errors";
 import { RfqRepo } from "../../repos/rfq-repo";
@@ -19,7 +20,7 @@ router.post(
       .trim()
       .notEmpty()
       .isNumeric()
-      .withMessage("You must supply a EAU"),
+      .withMessage("You must supply a min EAU"),
     body("customer_id")
       .trim()
       .notEmpty()
@@ -40,10 +41,28 @@ router.post(
       .notEmpty()
       .isNumeric()
       .withMessage("You must supply a KamId"),
+    body("final_solutions").trim(),
+    body("conclusions").trim(),
+    body("samples_expected").trim(),
+    body("mp_expected").trim(),
+    body("eau_max").trim(),
+    body("extra_note").trim(),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { eau, customer_id, distributor_id, pm_id, kam_id } = req.body;
+    const {
+      eau,
+      customer_id,
+      distributor_id,
+      pm_id,
+      kam_id,
+      final_solutions,
+      conclusions,
+      samples_expected,
+      mp_expected,
+      eau_max,
+      extra_note,
+    } = req.body;
 
     const kam = await UserRepo.findById(kam_id);
     if (!kam) {
@@ -64,7 +83,14 @@ router.post(
       existingRfq = await RfqRepo.findByRfqCode(rfq_code);
     }
 
-    const clickupId = await ClickUp.createTask({ pmEmail, rfqCode: rfq_code });
+    const rfqCodeWithExtraNote = extra_note
+      ? `${rfq_code} ${extra_note}`
+      : rfq_code;
+
+    const clickupId = await ClickUp.createTask({
+      pmEmail,
+      rfqCode: rfqCodeWithExtraNote,
+    });
 
     const rfq = await RfqRepo.insert({
       rfq_code,
@@ -74,9 +100,31 @@ router.post(
       pm_id,
       kam_id,
       clickup_id: clickupId,
+      final_solutions,
+      conclusions,
+      samples_expected,
+      mp_expected,
+      eau_max,
     });
 
     await spFileCreate({ kam: kam.shortname, rfq_code });
+
+    const pathModifier =
+      process.env.NODE_ENV === "production" ? "" : "testing/";
+
+    const spPath = `${keys.SP_DOMAIN}/Shared%20Documents/RIVERDI%20PROJECTS/${pathModifier}${kam.shortname}_!PROSPECTS/${rfq_code}`;
+
+    const appPath = `${keys.CLIENT_ORIGIN}/rfqs/${rfq.id}`;
+
+    const description = `
+
+${spPath}
+
+${appPath}
+
+    `;
+
+    await ClickUp.updateDescription({ taskId: clickupId, description });
 
     res.status(201).send(rfq);
   }

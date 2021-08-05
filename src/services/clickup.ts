@@ -7,6 +7,11 @@ interface IcreateTask {
   rfqCode: string;
 }
 
+interface IUpdateDescription {
+  taskId: string;
+  description: string;
+}
+
 interface ITeamMember {
   id: number;
   email: string;
@@ -51,6 +56,25 @@ export class ClickUp {
           name: rfqCode,
           assignees: [userId],
           status: "open projects",
+        },
+        {
+          headers: { Authorization: keys.CLICKUP_API_SECRET },
+        }
+      );
+
+      return response.data.id;
+    } catch (e) {
+      console.warn(e);
+      throw new BadRequestError(e.response.data.error);
+    }
+  }
+
+  static async updateDescription({ taskId, description }: IUpdateDescription) {
+    try {
+      const response = await axios.put(
+        `https://api.clickup.com/api/v2/task/${taskId}`,
+        {
+          description,
         },
         {
           headers: { Authorization: keys.CLICKUP_API_SECRET },

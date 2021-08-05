@@ -36,15 +36,31 @@ router.put(
       .notEmpty()
       .isNumeric()
       .withMessage("You must supply a KamId"),
+    body("final_solutions").trim(),
+    body("conclusions").trim(),
+    body("samples_expected").trim(),
+    body("mp_expected").trim(),
+    body("eau_max").trim(),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { eau, customer_id, distributor_id, pm_id, kam_id } = req.body;
+    const {
+      eau,
+      customer_id,
+      distributor_id,
+      pm_id,
+      kam_id,
+      final_solutions,
+      conclusions,
+      samples_expected,
+      mp_expected,
+      eau_max,
+    } = req.body;
     const { id } = req.params;
 
     let existingRfq = await RfqRepo.findById(id);
     if (!existingRfq) {
-      throw new BadRequestError("RFQ does not exists");
+      throw new BadRequestError("RFQ does not exist");
     }
 
     const rfq = await RfqRepo.updateData({
@@ -54,6 +70,11 @@ router.put(
       distributor_id,
       pm_id,
       kam_id,
+      final_solutions,
+      conclusions,
+      samples_expected,
+      mp_expected,
+      eau_max,
     });
 
     res.status(200).send(rfq);

@@ -24,17 +24,23 @@ router.post(
       .trim()
       .notEmpty()
       .withMessage("You must supply a requirement"),
+    body("priority")
+      .trim()
+      .notEmpty()
+      .isNumeric()
+      .withMessage("You must supply a priority"),
     body("note").trim(),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { rfq_id, c_nc_cwr, requirement, note } = req.body;
+    const { rfq_id, c_nc_cwr, requirement, note, priority } = req.body;
 
     const newRequirement = await RequirementRepo.insert({
       rfq_id,
       c_nc_cwr,
       requirement,
       note,
+      priority,
     });
 
     res.status(201).send(newRequirement);

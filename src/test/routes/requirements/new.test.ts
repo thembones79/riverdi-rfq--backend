@@ -17,6 +17,11 @@ describe("positives", () => {
         distributor_id: 1,
         pm_id: 1,
         kam_id: 1,
+        final_solutions: "final",
+        conclusions: "my thoughts",
+        samples_expected: "someday",
+        mp_expected: "someday",
+        eau_max: 3330000,
       })
       .expect(201);
 
@@ -29,6 +34,7 @@ describe("positives", () => {
         c_nc_cwr: "c",
         requirement: "new req",
         note: "new note",
+        priority: 0,
       })
       .expect(201);
 
@@ -51,6 +57,11 @@ describe("negatives", () => {
         distributor_id: 1,
         pm_id: 2,
         kam_id: 2,
+        final_solutions: "final",
+        conclusions: "my thoughts",
+        samples_expected: "someday",
+        mp_expected: "someday",
+        eau_max: 3330000,
       })
       .expect(201);
 
@@ -62,6 +73,7 @@ describe("negatives", () => {
         c_nc_cwr: "cd",
         requirement: "new req",
         note: "new note",
+        priority: 0,
       })
       .expect(400);
   });
@@ -78,6 +90,11 @@ describe("negatives", () => {
         distributor_id: 1,
         pm_id: 3,
         kam_id: 3,
+        final_solutions: "final",
+        conclusions: "my thoughts",
+        samples_expected: "someday",
+        mp_expected: "someday",
+        eau_max: 3330000,
       })
       .expect(201);
 
@@ -89,6 +106,7 @@ describe("negatives", () => {
         c_nc_cwr: "c",
         requirement: "",
         note: "new note",
+        priority: 0,
       })
       .expect(400);
   });
@@ -104,6 +122,7 @@ describe("negatives", () => {
         c_nc_cwr: "c",
         requirement: "new req",
         note: "new note",
+        priority: 0,
       })
       .expect(400);
   });
@@ -116,6 +135,7 @@ describe("negatives", () => {
         c_nc_cwr: "c",
         requirement: "new req",
         note: "new note",
+        priority: 0,
       })
       .expect(401);
   });

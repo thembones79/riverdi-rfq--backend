@@ -13,6 +13,11 @@ it("responds with rfqs list", async () => {
       distributor_id: 1,
       pm_id: 1,
       kam_id: 1,
+      final_solutions: "final",
+      conclusions: "my thoughts",
+      samples_expected: "someday",
+      mp_expected: "someday",
+      eau_max: 3330000,
     })
     .expect(201);
 

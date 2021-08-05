@@ -14,6 +14,11 @@ it("creates a rfq", async () => {
       distributor_id: 1,
       pm_id: 1,
       kam_id: 1,
+      final_solutions: "final",
+      conclusions: "my thoughts",
+      samples_expected: "someday",
+      mp_expected: "someday",
+      eau_max: 3330000,
     })
     .expect(201);
 
@@ -32,6 +37,11 @@ it("returns a 400 with invalid eau", async () => {
       distributor_id: 1,
       pm_id: 1,
       kam_id: 1,
+      final_solutions: "final",
+      conclusions: "my thoughts",
+      samples_expected: "someday",
+      mp_expected: "someday",
+      eau_max: 3330000,
     })
     .expect(400);
 });
@@ -47,6 +57,11 @@ it("returns a 400 with invalid customer_id", async () => {
       distributor_id: 1,
       pm_id: 1,
       kam_id: 1,
+      final_solutions: "final",
+      conclusions: "my thoughts",
+      samples_expected: "someday",
+      mp_expected: "someday",
+      eau_max: 3330000,
     })
     .expect(400);
 });
@@ -61,6 +76,11 @@ it("returns a 400 not provided customer_id", async () => {
       distributor_id: 1,
       pm_id: 1,
       kam_id: 1,
+      final_solutions: "final",
+      conclusions: "my thoughts",
+      samples_expected: "someday",
+      mp_expected: "someday",
+      eau_max: 3330000,
     })
     .expect(400);
 });
@@ -74,6 +94,11 @@ it("responds 401 if not authenticated", async () => {
       distributor_id: 1,
       pm_id: 1,
       kam_id: 1,
+      final_solutions: "final",
+      conclusions: "my thoughts",
+      samples_expected: "someday",
+      mp_expected: "someday",
+      eau_max: 3330000,
     })
     .expect(401);
 });
