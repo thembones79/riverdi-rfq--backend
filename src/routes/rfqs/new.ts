@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 
 import { validateRequest, requireAuth } from "../../middlewares";
+import { keys } from "../../config/keys";
 import { spFileCreate } from "../../services/spFileCreate";
 import { BadRequestError } from "../../errors";
 import { RfqRepo } from "../../repos/rfq-repo";
@@ -107,6 +108,23 @@ router.post(
     });
 
     await spFileCreate({ kam: kam.shortname, rfq_code });
+
+    const pathModifier =
+      process.env.NODE_ENV === "production" ? "" : "testing/";
+
+    const spPath = `${keys.SP_DOMAIN}/Shared%20Documents/RIVERDI%20PROJECTS/${pathModifier}${kam.shortname}_!PROSPECTS/${rfq_code}`;
+
+    const appPath = `${keys.CLIENT_ORIGIN}/rfqs/${rfq.id}`;
+
+    const description = `
+
+${spPath}
+
+${appPath}
+
+    `;
+
+    await ClickUp.updateDescription({ taskId: clickupId, description });
 
     res.status(201).send(rfq);
   }
