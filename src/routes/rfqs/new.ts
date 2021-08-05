@@ -112,7 +112,7 @@ router.post(
     const pathModifier =
       process.env.NODE_ENV === "production" ? "" : "testing/";
 
-    const spPath = `${keys.SP_DOMAIN}/Shared%20Documents/RIVERDI%20PROJECTS/${pathModifier}${kam.shortname}_!PROSPECTS/${rfq_code}`;
+    const spPath = `${keys.SP_DOMAIN}/sites/ProjectsManagementGroup/Shared%20Documents/RIVERDI%20PROJECTS/${pathModifier}${kam.shortname}_!PROSPECTS/${rfq_code}`;
 
     const appPath = `${keys.CLIENT_ORIGIN}/rfqs/${rfq.id}`;
 
