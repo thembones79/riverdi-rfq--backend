@@ -9,7 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### 🔥 Added
 
-- TODO
+- change `eau` -> `eau min` (mandatory) + `eau max` (optional) via **db schema migrations**
+- add requirements `order` feature via **db schema migrations**
+- add `final solutions` notes textarea and `conclusions` notes textarea via **db schema migrations**
+- add `samples expected` and `mp expected` text fields via **db schema migrations**
+- change `eau` -> `eau min` (mandatory) + `eau max` (optional) - updated `RfqRepo` class and `RFQ routes` (POST, PUT, GET) controllers logic
+- add requirements `order` feature - updated `RequirementRepo` class and `Requirement routes` (POST, PUT, GET) - controllers logic
+- autogenerating links to **Riverdi RFQ App** and **Sharepoint** and put them into **Clickup** task description - updated `RFQ routes` - controllers logic
+- add `final solutions` notes textarea and `conclusions` notes textarea - updated `RfqRepo` class and `RFQ routes` - (POST, PUT, GET) controllers logic
+- `extra_note` field to add after `rfq_code` in clickup task - updated `RFQ routes` controllers logic
+- add `samples expected` and `mp expected` text fields - updated `RfqRepo` class and `RFQ routes` (POST, PUT, GET) - controllers logic
+- unit tests for the new features
 
 ## [1.6.0] - 2021-08-02
 
