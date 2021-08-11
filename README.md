@@ -748,6 +748,50 @@ CustomerRepo.count()
 
 ## API (endpoints documentation)
 
+---
+
+### Usage _(note: this is a REST API and it is supposed to be consumed by some kind of frontend, SPA preferably, or a mobile app)_:
+
+---
+
+**Route (unprotected): `/signin`**
+
+> Request: `POST`
+>
+> Request Body: `{email, password}`
+>
+> Response: `{token, userId, username, userType}`
+
+_**Feature:** allows existing user to "sign in" - gives user a valid JSON Web Token that can be used to make other protected API requests_
+
+---
+
+#### Route (protected): `/api/line`
+
+> Request: `POST`
+>
+> Request Body: `{lineNumber}`
+>
+> Request Security Headers: `{authorization: validJsonWebTokenString}`
+>
+> Response: `{message: confirmationMessage}`
+
+_**Feature:** allows user to add new production line_
+
+---
+
+#### **Route (protected): `/api/lines`**
+
+> Request: `GET`
+>
+> Request Security Headers: `{authorization: validJsonWebTokenString}`
+>
+> Response: `{lines}`
+
+_**Feature:** fetches all lines data_
+
+---
+
 ## Tests
 
 ## Screenshots
