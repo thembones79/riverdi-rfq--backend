@@ -750,7 +750,11 @@ CustomerRepo.count()
 
 ---
 
-### Usage _(note: this is a REST API and it is supposed to be consumed by some kind of frontend)_:
+### Usage _(note: this is a REST API and it is supposed to be consumed by some kind of frontend)_
+
+---
+
+### 👉 User Router:
 
 ---
 
