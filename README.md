@@ -750,45 +750,57 @@ CustomerRepo.count()
 
 ---
 
-### Usage _(note: this is a REST API and it is supposed to be consumed by some kind of frontend, SPA preferably, or a mobile app)_:
+### Usage _(note: this is a REST API and it is supposed to be consumed by some kind of frontend)_:
 
 ---
 
-**Route (unprotected): `/signin`**
+#### Route (unprotected): `/api/v1/users/login`
 
 > Request: `POST`
 >
 > Request Body: `{email, password}`
 >
-> Response: `{token, userId, username, userType}`
+> Response: `{ id, username, email, shortname, role_id, deleted }` + `Set-Cookie` with **user** in **`JWT`**
 
-_**Feature:** allows existing user to "sign in" - gives user a valid JSON Web Token that can be used to make other protected API requests_
+_**Feature:** allows existing user to "log in" - sends back user details in response body, starts cookie session and sends back user in JWT ([JSON Web Token](https://jwt.io/)) stored in a cookie_
 
 ---
 
-#### Route (protected): `/api/line`
+#### Route (protected): `/api/v1/users/signup`
 
 > Request: `POST`
 >
-> Request Body: `{lineNumber}`
+> Request Body: `{ email, password, passwordConfirm, username, shortname, role_id }`
 >
-> Request Security Headers: `{authorization: validJsonWebTokenString}`
+> Request Cookie: `currentUser in JWT`
 >
-> Response: `{message: confirmationMessage}`
+> Response: `{ id, username, email, shortname, role_id }`
 
-_**Feature:** allows user to add new production line_
+_**Feature:** create a new user with data provided in the request's body (important! New users can be added only by admins – standard user would get 401 error with message: **"Not authorized"** )_
 
 ---
 
-#### **Route (protected): `/api/lines`**
+#### Route (protected): `/api/v1/users/logout`
+
+> Request: `POST`
+>
+> Request Body: `{ email, password, passwordConfirm, username, shortname, role_id }`
+>
+> Response: `{ id, username, email, shortname, role_id }`
+
+_**Feature:** logs out user - clears session_
+
+---
+
+#### Route (protected): `/api/v1/users/:id"`
 
 > Request: `GET`
 >
-> Request Security Headers: `{authorization: validJsonWebTokenString}`
+> Request Cookie: `currentUser in JWT`
 >
-> Response: `{lines}`
+> Response: `{ id, username, email, shortname, role_id }`
 
-_**Feature:** fetches all lines data_
+_**Feature:** returns user's `id, username, email, shortname, role_id` for given `id`_
 
 ---
 
