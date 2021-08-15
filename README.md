@@ -293,6 +293,11 @@ RfqRepo.findById(id: string);
   kam_id,
   kam,
   kam_fullname,
+  final_solutions,
+  conclusions,
+  samples_expected,
+  mp_expected,
+  eau_max,
   updated
 }
 ```
@@ -337,21 +342,31 @@ RfqRepo.findByRfqCode(rfq_code: string);
 
 ```Javascript
 RfqRepo.insert({
-  rfq_code,
-  eau,
-  customer_id,
-  distributor_id,
-  pm_id,
-  kam_id,
-  clickup_id,
-}: {
-  rfq_code: string;
-  eau: string;
-  customer_id: string;
-  distributor_id: string;
-  pm_id: string;
-  kam_id: string;
-  clickup_id: string;
+   rfq_code,
+    eau,
+    customer_id,
+    distributor_id,
+    pm_id,
+    kam_id,
+    clickup_id,
+    final_solutions,
+    conclusions,
+    samples_expected,
+    mp_expected,
+    eau_max,
+  }: {
+    rfq_code: string;
+    eau: string;
+    customer_id: string;
+    distributor_id: string;
+    pm_id: string;
+    kam_id: string;
+    clickup_id: string;
+    final_solutions: string;
+    conclusions: string;
+    samples_expected: string;
+    mp_expected: string;
+    eau_max: string;
 });
 ```
 
@@ -370,18 +385,28 @@ RfqRepo.insert({
 ```Javascript
 RfqRepo.updateData({
   id,
-  eau,
-  customer_id,
-  distributor_id,
-  pm_id,
-  kam_id,
-}: {
-  id: string;
-  eau: string;
-  customer_id: string;
-  distributor_id: string;
-  pm_id: string;
-  kam_id: string;
+    eau,
+    customer_id,
+    distributor_id,
+    pm_id,
+    kam_id,
+    final_solutions,
+    conclusions,
+    samples_expected,
+    mp_expected,
+    eau_max,
+  }: {
+    id: string;
+    eau: string;
+    customer_id: string;
+    distributor_id: string;
+    pm_id: string;
+    kam_id: string;
+    final_solutions: string;
+    conclusions: string;
+    samples_expected: string;
+    mp_expected: string;
+    eau_max: string;
 });
 ```
 
@@ -436,7 +461,7 @@ RequirementRepo.find();
 #### Response (`Array` of `Objects`):
 
 ```Javascript
-[{id, rfq_id, c_nc_cwr, requirement, note, date }]
+[{id, rfq_id, priority, c_nc_cwr, requirement, note, date }]
 ```
 
 > Returns list of all requirements
@@ -452,7 +477,7 @@ RequirementRepo.findByRfqId(rfq_id: string);
 #### Response (`Array` of `Objects`):
 
 ```Javascript
-[{id, rfq_id, c_nc_cwr, requirement, note, date }]
+[{id, rfq_id, priority, c_nc_cwr, requirement, note, date }]
 ```
 
 > Returns list of all requirements for given `rfq_id`
@@ -468,7 +493,7 @@ RequirementRepo.findById(id: string);
 #### Response (`Object`):
 
 ```Javascript
-{id, rfq_id, c_nc_cwr, requirement, note, date }
+{id, rfq_id, priority, c_nc_cwr, requirement, note, date }
 ```
 
 > Returns requirement with matching `id`
@@ -479,15 +504,17 @@ RequirementRepo.findById(id: string);
 
 ```Javascript
 RequirementRepo.insert({
-  rfq_id,
-  c_nc_cwr,
-  requirement,
-  note,
-}: {
-  rfq_id: string;
-  c_nc_cwr: string;
-  requirement: string;
-  note: string;
+    rfq_id,
+    priority,
+    c_nc_cwr,
+    requirement,
+    note,
+  }: {
+    rfq_id: string;
+    priority: string;
+    c_nc_cwr: string;
+    requirement: string;
+    note: string;
 });
 ```
 
@@ -505,17 +532,19 @@ RequirementRepo.insert({
 
 ```Javascript
 RequirementRepo.updateData({
-  id,
-  rfq_id,
-  c_nc_cwr,
-  requirement,
-  note,
-}: {
-  id: string;
-  rfq_id: string;
-  c_nc_cwr: string;
-  requirement: string;
-  note: string;
+    id,
+    rfq_id,
+    priority,
+    c_nc_cwr,
+    requirement,
+    note,
+  }: {
+    id: string;
+    rfq_id: string;
+    priority: string;
+    c_nc_cwr: string;
+    requirement: string;
+    note: string;
 });
 ```
 
@@ -718,6 +747,66 @@ CustomerRepo.count()
 ---
 
 ## API (endpoints documentation)
+
+---
+
+### Usage _(note: this is a REST API and it is supposed to be consumed by some kind of frontend)_
+
+---
+
+### 👉 User Router:
+
+---
+
+#### Route (unprotected): `/api/v1/users/login`
+
+> Request: `POST`
+>
+> Request Body: `{email, password}`
+>
+> Response: `{ id, username, email, shortname, role_id, deleted }` + `Set-Cookie` with **user** in **`JWT`**
+
+_**Feature:** allows existing user to "log in" - sends back user details in response body, starts cookie session and sends back user in JWT ([JSON Web Token](https://jwt.io/)) stored in a cookie_
+
+---
+
+#### Route (protected): `/api/v1/users/signup`
+
+> Request: `POST`
+>
+> Request Body: `{ email, password, passwordConfirm, username, shortname, role_id }`
+>
+> Request Cookie: `currentUser in JWT`
+>
+> Response: `{ id, username, email, shortname, role_id }`
+
+_**Feature:** create a new user with data provided in the request's body (important! New users can be added only by admins – standard user would get 401 error with message: **"Not authorized"** )_
+
+---
+
+#### Route (unprotected): `/api/v1/users/logout`
+
+> Request: `POST`
+>
+> Request Body: `{ email, password, passwordConfirm, username, shortname, role_id }`
+>
+> Response: `{ id, username, email, shortname, role_id }`
+
+_**Feature:** logs out user - clears session_
+
+---
+
+#### Route (protected): `/api/v1/users/:id"`
+
+> Request: `GET`
+>
+> Request Cookie: `currentUser in JWT`
+>
+> Response: `{ id, username, email, shortname, role_id }`
+
+_**Feature:** returns user's `id, username, email, shortname, role_id` for given `id`_
+
+---
 
 ## Tests
 

@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post(
   "/users/signup",
-  // requireAuth,
+  requireAuth,
   [
     body("email")
       .trim()
@@ -50,9 +50,9 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    // if (req.currentUser?.role_id !== 1) {
-    //   throw new NotAuthorizedError();
-    // }
+    if (req.currentUser?.role_id !== 1) {
+      throw new NotAuthorizedError();
+    }
 
     const { email, password, username, shortname, role_id } = req.body;
     const existingUser = await UserRepo.findByEmail(email);
@@ -68,20 +68,6 @@ router.post(
       shortname,
       role_id,
     });
-
-    const userJwt = jwt.sign(
-      {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        role_id: user.role_id,
-      },
-      keys.JWT_SECRET
-    );
-
-    req.session = {
-      jwt: userJwt,
-    };
 
     delete user.password;
 
