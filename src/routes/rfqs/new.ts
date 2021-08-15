@@ -105,6 +105,7 @@ router.post(
       samples_expected,
       mp_expected,
       eau_max,
+      extra_note,
     });
 
     await spFileCreate({ kam: kam.shortname, rfq_code });
