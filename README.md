@@ -784,7 +784,7 @@ _**Feature:** create a new user with data provided in the request's body (import
 
 ---
 
-#### Route (protected): `/api/v1/users/logout`
+#### Route (unprotected): `/api/v1/users/logout`
 
 > Request: `POST`
 >
