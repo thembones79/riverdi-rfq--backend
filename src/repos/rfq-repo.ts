@@ -9,6 +9,7 @@ class RfqRepo {
       r.id,
       rfq_code,
       eau,
+      extra_note,
       customers.name AS customer,
       distributors.name AS distributor,
       pm.shortname AS pm,
@@ -46,6 +47,7 @@ class RfqRepo {
               kam_id,
               kam.shortname AS kam,
               kam.username AS kam_fullname,
+              extra_note,
               final_solutions,
               conclusions,
               samples_expected,
@@ -104,6 +106,7 @@ class RfqRepo {
     samples_expected,
     mp_expected,
     eau_max,
+    extra_note,
   }: {
     rfq_code: string;
     eau: string;
@@ -117,6 +120,7 @@ class RfqRepo {
     samples_expected: string;
     mp_expected: string;
     eau_max: string;
+    extra_note: string;
   }) {
     try {
       const result = await pool.query(
@@ -132,8 +136,9 @@ class RfqRepo {
           conclusions,
           samples_expected,
           mp_expected,
-          eau_max)
-          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+          eau_max,
+          extra_note)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
           RETURNING id, rfq_code;`,
         [
           rfq_code,
@@ -148,6 +153,7 @@ class RfqRepo {
           samples_expected,
           mp_expected,
           eau_max,
+          extra_note,
         ]
       );
       return result?.rows[0];
@@ -168,6 +174,7 @@ class RfqRepo {
     samples_expected,
     mp_expected,
     eau_max,
+    extra_note,
   }: {
     id: string;
     eau: string;
@@ -180,6 +187,7 @@ class RfqRepo {
     samples_expected: string;
     mp_expected: string;
     eau_max: string;
+    extra_note: string;
   }) {
     try {
       const result = await pool.query(
@@ -194,6 +202,7 @@ class RfqRepo {
           samples_expected = $9,
           mp_expected = $10,
           eau_max = $11,
+          extra_note = $12,
           updated_at = CURRENT_TIMESTAMP
           WHERE id = $1
           RETURNING id, rfq_code;`,
@@ -209,6 +218,7 @@ class RfqRepo {
           samples_expected,
           mp_expected,
           eau_max,
+          extra_note,
         ]
       );
       return result?.rows[0];
