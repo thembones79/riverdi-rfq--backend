@@ -6,21 +6,21 @@ class RfqRepo {
     try {
       const result = await pool.query(`
       SELECT
-      r.id,
-      rfq_code,
-      eau,
-      extra_note,
-      customers.name AS customer,
-      distributors.name AS distributor,
-      pm.shortname AS pm,
-      kam.shortname AS kam,
-      to_char(r.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
-      FROM rfqs AS r
-      JOIN customers ON customers.id = r.customer_id
-      JOIN distributors ON distributors.id = r.distributor_id
-      JOIN users AS pm ON pm.id = r.pm_id
-      JOIN users AS kam ON kam.id = r.kam_id
-      ORDER BY updated DESC;
+        r.id,
+        rfq_code,
+        eau,
+      COALESCE(extra_note, '') AS extra_note,
+        customers.name AS customer,
+        distributors.name AS distributor,
+        pm.shortname AS pm,
+        kam.shortname AS kam,
+        to_char(r.updated_at, 'YYYY-MM-DD HH24:MI:SS') as updated
+        FROM rfqs AS r
+        JOIN customers ON customers.id = r.customer_id
+        JOIN distributors ON distributors.id = r.distributor_id
+        JOIN users AS pm ON pm.id = r.pm_id
+        JOIN users AS kam ON kam.id = r.kam_id
+        ORDER BY updated DESC;
       `);
       return result?.rows;
     } catch (error) {
