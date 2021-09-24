@@ -23,7 +23,7 @@ class RfqRepo {
         ORDER BY updated DESC;
       `);
       return result?.rows;
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -64,7 +64,7 @@ class RfqRepo {
         [id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -76,7 +76,7 @@ class RfqRepo {
         [rfq_code]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -88,7 +88,7 @@ class RfqRepo {
         [distributor_id]
       );
       return result?.rows;
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -157,7 +157,7 @@ class RfqRepo {
         ]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -222,7 +222,7 @@ class RfqRepo {
         ]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -234,7 +234,7 @@ class RfqRepo {
         [id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -243,7 +243,7 @@ class RfqRepo {
     try {
       const result = await pool.query(`SELECT COUNT(*) FROM rfqs;`);
       return parseInt(result?.rows[0].count);
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }

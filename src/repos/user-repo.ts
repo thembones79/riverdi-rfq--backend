@@ -13,7 +13,7 @@ class UserRepo {
         `
       );
       return result?.rows;
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -30,7 +30,7 @@ class UserRepo {
         `
       );
       return result?.rows;
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -42,7 +42,7 @@ class UserRepo {
         [id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -54,7 +54,7 @@ class UserRepo {
         [email]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -78,7 +78,7 @@ class UserRepo {
         [username, password, email, shortname, role_id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -102,7 +102,7 @@ class UserRepo {
         [id, username, email, shortname, role_id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -120,7 +120,7 @@ class UserRepo {
         [password, id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -132,7 +132,7 @@ class UserRepo {
         [id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -144,7 +144,7 @@ class UserRepo {
         [id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -156,7 +156,7 @@ class UserRepo {
         [id]
       );
       return result?.rows[0];
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }
@@ -165,7 +165,7 @@ class UserRepo {
     try {
       const result = await pool.query(`SELECT COUNT(*) FROM users;`);
       return parseInt(result?.rows[0].count);
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error.message);
     }
   }

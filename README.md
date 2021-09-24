@@ -17,6 +17,7 @@
 - list RFQs
 - sort RFQs (handled on frontend)
 - filter RFQs (handled on frontend)
+- view RFQ's details
 - Add requirements (with notes) to existing RFQs
 - All `CRUD` operations on: **RFQs, requirements, distributors and users**
 - Comarch ERP XL integration (fetching customers)
@@ -72,7 +73,7 @@ UserRepo.findWithAdmins();
 #### Response (`Array` of `Objects`):
 
 ```Javascript
-[{id, username, name, email, shortname, role_id}]
+[{id, username, name, email, shortname, role_id, role}]
 ```
 
 > Returns list of all users (admins included) that are not marked as `deleted`.
@@ -262,7 +263,7 @@ RfqRepo.find();
 #### Response (`Array` of `Objects`):
 
 ```Javascript
-[{id, rfq_code, eau, customer, distributor, pm, kam, updated}]
+[{id, rfq_code, eau, extra_note, customer, distributor, pm, kam, updated}]
 ```
 
 > Returns list of all rfqs
@@ -293,6 +294,7 @@ RfqRepo.findById(id: string);
   kam_id,
   kam,
   kam_fullname,
+  extra_note,
   final_solutions,
   conclusions,
   samples_expected,
@@ -342,7 +344,7 @@ RfqRepo.findByRfqCode(rfq_code: string);
 
 ```Javascript
 RfqRepo.insert({
-   rfq_code,
+    rfq_code,
     eau,
     customer_id,
     distributor_id,
@@ -354,6 +356,7 @@ RfqRepo.insert({
     samples_expected,
     mp_expected,
     eau_max,
+    extra_note,
   }: {
     rfq_code: string;
     eau: string;
@@ -367,6 +370,7 @@ RfqRepo.insert({
     samples_expected: string;
     mp_expected: string;
     eau_max: string;
+    extra_note: string;
 });
 ```
 
